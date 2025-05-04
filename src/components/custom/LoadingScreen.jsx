@@ -2,8 +2,9 @@
 
 import { useEffect, useState } from "react"
 import { useAuthStore } from '@/store/authStore'
-import Image from "next/image"
-import Logo from '@images/Logo3.png'
+import { LoaderCircle } from 'lucide-react';
+
+
 const LoadingScreen = () => {
    const [isMounted, setIsMounted] = useState(false)
    const loading = useAuthStore((s) => s.loading)
@@ -11,23 +12,20 @@ const LoadingScreen = () => {
    useEffect(() => setIsMounted(true), [])
    if (!isMounted) return null
    
-  if (!loading) return null
+   if (!loading) return null
 
    return (
-      <div className="w-full h-screen fixed inset-0 flex items-center justify-center bg-[#006699] z-50">
-      {/* <div className="fixed inset-0 flex items-center justify-center bg-[#006699] z-50"> */}
-          <div className="w-4/10 max-w-[40%] md:max-w-[30%] lg:max-w-[20%] animate-heartbeat">
-            <Image
-               src={Logo}
-               alt="Logo"
-               width={400}
-               height={400}
-               className="bg-[#006699] w-full h-auto"
-               priority 
-            />
-         </div>
+      <div className="flex flex-col items-center justify-center min-h-[calc(75vh-3.5rem)] mt-14.5 w-full">
+         <LoaderCircle
+           className="text-[#006699] animate-spin transition-all ease-in-out
+                      w-8 h-8
+                      sm:w-10 sm:h-10
+                      md:w-12 md:h-12
+                      lg:w-16 lg:h-16"
+           strokeWidth={2}
+         />
       </div>
-    )
+   )
 }
 
 export default LoadingScreen

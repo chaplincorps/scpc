@@ -22,7 +22,7 @@ export const useAuthStore = create((set, get) => {
 
          set({ loading: true })
 
-         const start = Date.now()
+         // const start = Date.now()
 
          const { data, error } = await supabase.auth.getUser()
          if (error) {
@@ -33,9 +33,9 @@ export const useAuthStore = create((set, get) => {
             set({ user: data.user })
           }
 
-          const elapsed = Date.now() - start
-          const toWait  = Math.max(0, 5000 - elapsed)
-          if (toWait > 0) await new Promise((r) => setTimeout(r, toWait))
+         //  const elapsed = Date.now() - start
+         //  const toWait  = Math.max(0, 5000 - elapsed)
+         //  if (toWait > 0) await new Promise((r) => setTimeout(r, toWait))
 
           set({ loading: false })
       },

@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "dashboard": "Dashboard",
+    "cbtExam": "CBT Exam",
+    "cbtResults": "CBT Results",
+    "applicationForm": "Application Form",
+    "profile": "Profile",
+    "settings": "Settings",
+    "support": "Support",
+    "logout": "Logout",
+    "search": "Search...",
+    "language": "Language",
+    "onboarding": "Onboarding",
+    "login": "Login",
+    "register": "Register",
+    "verifyEmail": "Verify Email",
+    "resetPassword": "Reset Password",
+    "gallery": "Gallery",
+    "events": "Events",
+    "about": "About",
+    "terms": "Terms",
+    "policy": "Policy"
+  },
+  "common": {
+    "loading": "Loading...",
+    "copyright": "All rights reserved, SCPC 2025"
+  }
+} 

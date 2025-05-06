@@ -56,7 +56,7 @@ const NavigationLogic = () => {
    }
  
    const publicNavigationItems = useMemo(() => [
-     { title: translate('navigation.onboarding'),      icon: Compass,           url: '/onboarding',          isActive: pathname === '/onboarding' },
+     { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding',   isActive: pathname === '/Client/Onboarding' },
      { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/login',               isActive: pathname === '/login' },
      { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/register',            isActive: pathname === '/register' },
      { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/verify-email',        isActive: pathname === '/verify-email' },
@@ -132,7 +132,7 @@ const NavigationLogic = () => {
      if (!authInitialized) {
        return <Skeleton className="h-6 w-24 rounded" />
      }
-     const items = isAuthenticated ? authenticatedNavigationItems : publicNavigationItems
+     const items = isAuthenticated ? authenticatedNavigationItems :publicNavigationItems
      const active = items.find(i => i.isActive)
      return active ? active.title : chaplain.name
    }

@@ -1,11 +1,6 @@
 import './globals.css';
 import AuthProvider from '@/components/custom/AuthProvider'
 import { Toaster } from 'react-hot-toast';
-
-export const metadata = {
-   title: 'Special Chaplain Peace Corps',
-   description: 'Welcome to the Special Chaplain Peace Corps client portal',
- }
  
  export default function RootLayout({ children }) {
    return (

@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "dashboard": "仪表板",
+    "cbtExam": "CBT考试",
+    "cbtResults": "CBT结果",
+    "applicationForm": "申请表",
+    "profile": "个人资料",
+    "settings": "设置",
+    "support": "支持",
+    "logout": "登出",
+    "search": "搜索...",
+    "language": "语言",
+    "onboarding": "入职",
+    "login": "登录",
+    "register": "注册",
+    "verifyEmail": "验证邮箱",
+    "resetPassword": "重设密码",
+    "gallery": "画廊",
+    "events": "活动",
+    "about": "关于",
+    "terms": "条款",
+    "policy": "政策"
+  },
+  "common": {
+    "loading": "加载中...",
+    "copyright": "版权所有，SCPC 2025"
+  }
+} 

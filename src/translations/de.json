@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "dashboard": "Dashboard",
+    "cbtExam": "CBT-Prüfung",
+    "cbtResults": "CBT-Ergebnisse",
+    "applicationForm": "Antragsformular",
+    "profile": "Profil",
+    "settings": "Einstellungen",
+    "support": "Support",
+    "logout": "Abmelden",
+    "search": "Suchen...",
+    "language": "Sprache",
+    "onboarding": "Einführung",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "verifyEmail": "E-Mail bestätigen",
+    "resetPassword": "Passwort zurücksetzen",
+    "gallery": "Galerie",
+    "events": "Veranstaltungen",
+    "about": "Über uns",
+    "terms": "Bedingungen",
+    "policy": "Richtlinien"
+  },
+  "common": {
+    "loading": "Wird geladen...",
+    "copyright": "Alle Rechte vorbehalten, SCPC 2025"
+  }
+} 

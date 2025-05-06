@@ -1,0 +1,28 @@
+{
+  "navigation": {
+    "dashboard": "لوحة التحكم",
+    "cbtExam": "اختبار CBT",
+    "cbtResults": "نتائج CBT",
+    "applicationForm": "نموذج الطلب",
+    "profile": "الملف الشخصي",
+    "settings": "الإعدادات",
+    "support": "الدعم",
+    "logout": "تسجيل الخروج",
+    "search": "بحث...",
+    "language": "اللغة",
+    "onboarding": "التأهيل",
+    "login": "تسجيل الدخول",
+    "register": "التسجيل",
+    "verifyEmail": "تحقق من البريد الإلكتروني",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "gallery": "المعرض",
+    "events": "الفعاليات",
+    "about": "حول",
+    "terms": "الشروط",
+    "policy": "السياسة"
+  },
+  "common": {
+    "loading": "جاري التحميل...",
+    "copyright": "جميع الحقوق محفوظة، SCPC 2025"
+  }
+} 

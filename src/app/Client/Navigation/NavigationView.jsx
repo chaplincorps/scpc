@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Logo from '@/images/WaterMark_Logo.png'
-import { Menu, Languages } from 'lucide-react'
+import { Languages } from 'lucide-react'
 import {useSidebar} from '@/components/ui/sidebar'
 import {
   Sidebar,
@@ -130,7 +130,7 @@ const NavigationContent = ({children}) => {
                     asChild={!item.onClick}
                     tooltip={item.title}
                     isActive={item.isActive}
-                    className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:px-0 hover:bg-white hover:text-[#006699] data-[active=true]:bg-white data-[active=true]:text-green-600 transition-colors rounded text-white"
+                    className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:w-full group-data-[collapsible=icon]:px-0 hover:bg-white hover:text-[#006699] data-[active=true]:bg-white data-[active=true]:text-[#006699] transition-colors rounded text-white"
                     onClick={() => item.onClick && item.onClick()}
                   >
                     {item.onClick ? (
@@ -173,7 +173,7 @@ const NavigationContent = ({children}) => {
       </Sidebar>
 
       <main className="flex-1 flex flex-col min-w-0 max-w-full w-full">
-        <header className={`fixed top-0 right-0 z-5 flex items-center h-12.5  px-6 border-b bg-[#006699] shadow-md transition-all duration-300 ${sidebarCollapsed ? 'md:pl-12' : 'md:pl-64'} left-0`}>
+        <header className={`fixed top-0 right-0 z-50 flex items-center h-[49px]  px-6  bg-[#006699] shadow-md transition-all duration-300 ${sidebarCollapsed ? 'md:pl-12' : 'md:pl-64'} left-0`}>
           <div className="p-2 flex items-center w-full">
           {!authInitialized ? (
             <Skeleton className="mr-3 h-6 w-6 rounded" />
@@ -310,7 +310,7 @@ const NavigationContent = ({children}) => {
           </div>
         </header>
 
-        <div className="flex-1 p-4 mt-16 overflow-auto">
+        <div className="flex-1 mt-12 overflow-auto">
           {children}
         </div>
       </main>

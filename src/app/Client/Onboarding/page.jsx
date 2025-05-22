@@ -1,4 +1,4 @@
-import OnboardingView from './OnboardingView'
+import ClientOnboardingPage from './ClientOnboardingPage'
 
 export const metadata = {
   title: 'SCPC - Onboarding',
@@ -6,5 +6,6 @@ export const metadata = {
 }
 
 export default function OnboardingPage() {
-  return <OnboardingView />
+
+  return <ClientOnboardingPage />
 }

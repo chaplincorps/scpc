@@ -21,6 +21,7 @@ import {
   Library,
   Scroll,
   FileText,
+  School
 } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuthStore } from '@/store/authStore'
@@ -31,6 +32,9 @@ const NavigationLogic = () => {
    const pathname = usePathname()
    const user = useAuthStore(state => state.user)
    const loading = useAuthStore(state => state.loading)
+   const initialized = useAuthStore(state => state.initialized)
+   const authInitialized = initialized && !loading
+   const isAuthenticated = authInitialized && Boolean(user)
    const { currentLanguage: lang, languages, setLanguage } = useLanguageStore()
    const { translate, currentLanguage } = useTranslation()
 
@@ -39,9 +43,8 @@ const NavigationLogic = () => {
      console.log('NavigationLogic language:', currentLanguage, 'store language:', lang)
    }, [currentLanguage, lang])
 
-   const isAuthenticated = Boolean(user)
-   const authInitialized = !loading
- 
+   
+
    const chaplain = useMemo(() => ({
      name: 'SCPC',
      fullName: 'Special Chaplain Peace Corps',
@@ -56,24 +59,25 @@ const NavigationLogic = () => {
    }
  
    const publicNavigationItems = useMemo(() => [
-     { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding',   isActive: pathname === '/Client/Onboarding' },
-     { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/login',               isActive: pathname === '/login' },
-     { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/register',            isActive: pathname === '/register' },
-     { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/verify-email',        isActive: pathname === '/verify-email' },
-     { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/reset-password',      isActive: pathname === '/reset-password' },
-     { title: translate('navigation.gallery'),         icon: Image,             url: '/gallery',             isActive: pathname === '/gallery' },
-     { title: translate('navigation.events'),          icon: Calendar,          url: '/events',              isActive: pathname === '/events' },
-     { title: translate('navigation.about'),           icon: Library,           url: '/about',               isActive: pathname === '/about' },
-     { title: translate('navigation.support'),         icon: Headset,           url: '/support',             isActive: pathname === '/support' },
-     { title: translate('navigation.terms'),           icon: Handshake,         url: '/terms',               isActive: pathname === '/terms' },
-     { title: translate('navigation.policy'),          icon: GlobeLock,         url: '/policy',              isActive: pathname === '/policy' },
+     { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding', id:'dashboard',       isActive: pathname === '/Client/Onboarding' },
+     { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/login',             id:'login',           isActive: pathname === '/login' },
+     { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/register',          id:'register',        isActive: pathname === '/register' },
+     { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/verify-email',      id:'verify-email',    isActive: pathname === '/verify-email' },
+     { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/reset-password',    id:'reset-password',  isActive: pathname === '/reset-password' },
+     { title: translate('navigation.gallery'),         icon: Image,             url: '/gallery',           id:'gallery',         isActive: pathname === '/gallery' },
+     { title: translate('navigation.events'),          icon: Calendar,          url: '/events',            id:'events',          isActive: pathname === '/events' },
+     { title: translate('navigation.about'),           icon: Library,           url: '/about',             id:'about',           isActive: pathname === '/about' },
+     { title: translate('navigation.support'),         icon: Headset,           url: '/support',           id:'support',         isActive: pathname === '/support' },
+     { title: translate('navigation.terms'),           icon: Handshake,         url: '/terms',             id:'terms',           isActive: pathname === '/terms' },
+     { title: translate('navigation.policy'),          icon: GlobeLock,         url: '/policy',            id:'policy',          isActive: pathname === '/policy' },
    ], [pathname, translate, currentLanguage])
  
    const authenticatedNavigationItems = useMemo(() => [
-     { title: translate('navigation.dashboard'),        icon: LayoutDashboard,  url: '/client/dashboard',    isActive: pathname === '/client/dashboard' },
-     { title: translate('navigation.cbtExam'),         icon: BookOpenCheck,    url: '/client/cbt-exam',      isActive: pathname === '/client/cbt-exam' },
-     { title: translate('navigation.cbtResults'),      icon: Scroll,            url: '/client/cbt-results',   isActive: pathname === '/client/cbt-results' },
-     { title: translate('navigation.applicationForm'), icon: FileText,         url: '/client/application',   isActive: pathname === '/client/application' },
+     { title: translate('navigation.dashboard'),        icon: LayoutDashboard,  url: '/client/dashboard', id:'client-dashboard',    isActive: pathname === '/client/dashboard' },
+     { title: translate('navigation.cbtExam'),         icon: BookOpenCheck,    url: '/client/cbt-exam', id:'cbt-exam',     isActive: pathname === '/client/cbt-exam' },
+     { title: translate('navigation.cbtResults'),      icon: Scroll,            url: '/client/cbt-results',id:'/cbt-results',   isActive: pathname === '/client/cbt-results' },
+     { title: translate('navigation.applicationForm'), icon: FileText,         url: '/client/application',id:'application',   isActive: pathname === '/client/application' },
+     { title: translate('navigation.learn'), icon: School,         url: '/client/learn', id:'learn',   isActive: pathname === '/client/learn' },
    ], [pathname, translate, currentLanguage])
  
    const dropdownItems = useMemo(() => [

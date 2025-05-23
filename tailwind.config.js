@@ -109,7 +109,8 @@ module.exports = {
       require('@tailwindcss/aspect-ratio'),
    ],
    fontFamily: {
-      inter: ['Inter', 'sans-serif'], 
+      sans: ['Inter', 'sans-serif'], 
+      inter: ['Inter', 'sans-serif']
     },
    
  }

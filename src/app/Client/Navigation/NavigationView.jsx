@@ -73,26 +73,26 @@ const NavigationContent = ({children}) => {
   }
 
   return (
-    <div className="flex min-h-screen bg-white w-screen">
+    <div className="flex w-screen min-h-screen bg-white">
       <Sidebar collapsible="icon">
         <SidebarHeader>
           <div className="w-full flex items-center justify-between group-data-[collapsible=icon]:justify-center">
-            <div className="w-full flex items-center justify-between">
+            <div className="flex items-center justify-between w-full">
               {!authInitialized ? (
                 <>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full animate-pulse">
-                    <Skeleton className="h-8 w-8 rounded-full" />
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full animate-pulse">
+                    <Skeleton className="w-8 h-8 rounded-full" />
                   </div>
 
-                  <Skeleton className="h-6 w-45 rounded" />
+                  <Skeleton className="h-6 rounded w-45" />
 
-                  <Skeleton className="h-6 w-6 rounded md:hidden" />
+                  <Skeleton className="w-6 h-6 rounded md:hidden" />
 
 
                 </>
               ) : (
                 <>
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full">
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full">
                     <Image
                       src={Logo}
                       alt="SCPC Logo"
@@ -108,7 +108,7 @@ const NavigationContent = ({children}) => {
                     </p>
                   </div>
                   <div className="md:hidden">
-                  <SidebarTrigger className="text-white hover:bg-white/10  hover:text-white rounded" />
+                  <SidebarTrigger className="text-white rounded hover:bg-white/10 hover:text-white" />
                   </div>
                 </>
               )}
@@ -135,12 +135,12 @@ const NavigationContent = ({children}) => {
                   >
                     {item.onClick ? (
                       <div className="flex items-center w-full group-data-[collapsible=icon]:justify-center cursor-pointer">
-                        <item.icon className="h-5 w-5" />
+                        <item.icon className="w-5 h-5" />
                         <span className="ml-2 group-data-[collapsible=icon]:hidden">{item.title}</span>
                       </div>
                     ) : (
                       <Link href={item.url || '#'} data-active={item.isActive} className="flex items-center w-full group-data-[collapsible=icon]:justify-center">
-                        <item.icon className="h-5 w-5" />
+                        <item.icon className="w-5 h-5" />
                         <span className="ml-2 group-data-[collapsible=icon]:hidden">{item.title}</span>
                       </Link>
                     )}
@@ -155,9 +155,9 @@ const NavigationContent = ({children}) => {
           <div className="absolute inset-x-0">
             <SidebarSeparator className="h-px bg-white" />
           </div>
-          <div className="w-full flex items-center justify-center pt-2">
+          <div className="flex items-center justify-center w-full pt-2">
             {!authInitialized ? (
-              <Skeleton className="h-6 w-full rounded" />
+              <Skeleton className="w-full h-6 rounded" />
             ) : (
               <>
                 <p className="hidden group-data-[collapsible=icon]:flex group-data-[collapsible=icon]:items-center group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:text-white group-data-[collapsible=icon]:text-[18px]">
@@ -172,18 +172,18 @@ const NavigationContent = ({children}) => {
         </SidebarFooter>
       </Sidebar>
 
-      <main className="flex-1 flex flex-col min-w-0 max-w-full w-full">
+      <main className="flex flex-col flex-1 w-full max-w-full min-w-0">
         <header className={`fixed top-0 right-0 z-50 flex items-center h-[49px]  px-6  bg-[#006699] shadow-md transition-all duration-300 ${sidebarCollapsed ? 'md:pl-12' : 'md:pl-64'} left-0`}>
-          <div className="p-2 flex items-center w-full">
+          <div className="flex items-center w-full p-2">
           {!authInitialized ? (
-            <Skeleton className="mr-3 h-6 w-6 rounded" />
+            <Skeleton className="w-6 h-6 mr-3 rounded" />
           ):(
-               <SidebarTrigger className=" mr-3 text-white hover:bg-white/10 hover:text-white rounded" />
+               <SidebarTrigger className="mr-3 text-white rounded  hover:bg-white/10 hover:text-white" />
             )}
             <Breadcrumb className="text-white">
               <BreadcrumbList>
                 {!authInitialized ? (
-                  <Skeleton className="h-6 w-28 rounded" />
+                  <Skeleton className="h-6 rounded w-28" />
                 ) : (
                   <BreadcrumbLink href={isAuthenticated ? '/client/dashboard' : '/client/onboarding'} className="font-bold text-white hover:text-green-100">
                     {chaplain.name}
@@ -200,13 +200,13 @@ const NavigationContent = ({children}) => {
                   <Button 
                     variant="ghost" 
                     size="icon"
-                    className="relative h-8 w-8 rounded-full hover:bg-white/10"
+                    className="relative w-8 h-8 rounded-full hover:bg-white/10"
                   >
                     {!authInitialized ? (
-                      <Skeleton className="h-6 w-6 rounded" />
+                      <Skeleton className="w-6 h-6 rounded" />
                     ) : (
                       <>
-                        <Languages className="h-5 w-5 text-white" />
+                        <Languages className="w-5 h-5 text-white" />
                         <span className="sr-only">Change Language</span>
                         <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-white text-[8px] font-bold text-[#006699]">
                           {currentLanguage.toUpperCase()}
@@ -217,7 +217,7 @@ const NavigationContent = ({children}) => {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-40" align="end">
                   <DropdownMenuLabel className="flex items-center gap-2">
-                    <Languages className="h-4 w-4" />
+                    <Languages className="w-4 h-4" />
                     <span>{translate('navigation.language')}</span>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
@@ -225,8 +225,8 @@ const NavigationContent = ({children}) => {
                     {!authInitialized ? (
                       Array(6).fill(null).map((_, i) => (
                         <DropdownMenuItem key={i} className="flex items-center gap-2">
-                          <Skeleton className="h-4 w-4 rounded" />
-                          <Skeleton className="h-4 w-16" />
+                          <Skeleton className="w-4 h-4 rounded" />
+                          <Skeleton className="w-16 h-4" />
                         </DropdownMenuItem>
                       ))
                     ) : (
@@ -247,9 +247,9 @@ const NavigationContent = ({children}) => {
 
               {isAuthenticated && (
                 <>
-                  <form onSubmit={handleSearch} className="relative hidden lg:block flex-1 max-w-md">
+                  <form onSubmit={handleSearch} className="relative flex-1 hidden max-w-md lg:block">
                     {!authInitialized ? (
-                      <Skeleton className="h-9 w-full rounded" />
+                      <Skeleton className="w-full rounded h-9" />
                     ) : (
                       <>
                         <Input 
@@ -265,11 +265,11 @@ const NavigationContent = ({children}) => {
 
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" className="relative h-9 w-9 rounded-full hover:bg-green-500">
+                      <Button variant="ghost" className="relative rounded-full h-9 w-9 hover:bg-green-500">
                         {!authInitialized ? (
-                          <Skeleton className="h-9 w-9 rounded-full" />
+                          <Skeleton className="rounded-full h-9 w-9" />
                         ) : (
-                          <Avatar className="h-9 w-9 border-2 border-white">
+                          <Avatar className="border-2 border-white h-9 w-9">
                             <AvatarImage src="/placeholder.svg" alt="User" />
                             <AvatarFallback className="bg-white text-[#006699] font-bold">SM</AvatarFallback>
                           </Avatar>
@@ -279,7 +279,7 @@ const NavigationContent = ({children}) => {
                     <DropdownMenuContent className="w-56" align="end">
                       <DropdownMenuLabel className="font-normal">
                         {!authInitialized ? (
-                          <Skeleton className="h-4 w-24" />
+                          <Skeleton className="w-24 h-4" />
                         ) : (
                           <div className="flex flex-col space-y-1">
                             <p className="text-sm font-medium leading-none">John Doe</p>
@@ -297,7 +297,7 @@ const NavigationContent = ({children}) => {
                             onClick={item.title === 'Logout' ? handleLogout : undefined}
                             className={item.title === 'Logout' ? 'text-red-500' : ''}
                           >
-                            <item.icon className="mr-2 h-4 w-4" />
+                            <item.icon className="w-4 h-4 mr-2" />
                             <span>{item.title}</span>
                           </DropdownMenuItem>
                         ))}

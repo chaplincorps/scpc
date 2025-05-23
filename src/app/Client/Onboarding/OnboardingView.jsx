@@ -10,32 +10,7 @@ import { useTranslation } from "@/utils/translations"
 
 const OnboardingView = () => {
    const { translate } = useTranslation()
-   
-   const convertWrittenNumberToNumeric = (writtenNumber) => {
-      // For now, we'll use a simple mapping for the numbers we know we have
-      const numberMap = {
-         // English
-         "twenty-eight": 28,
-         "two": 2,
-         // French
-         "vingt-huit": 28,
-         "deux": 2,
-         // Spanish
-         "veintiocho": 28,
-         "dos": 2,
-         // German
-         "achtundzwanzig": 28,
-         "zwei": 2,
-         // Chinese
-         "二十八": 28,
-         "二": 2,
-         // Arabic
-         "٢٨": 28,
-         "٢": 2
-      }
-      return numberMap[writtenNumber] || 0
-   }
-   
+      
    return (
          <div className="flex flex-col bg-white overflow-hidden">
          <main className="flex-1">

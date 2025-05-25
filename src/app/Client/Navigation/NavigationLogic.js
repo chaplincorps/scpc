@@ -60,7 +60,7 @@ const NavigationLogic = () => {
  
    const publicNavigationItems = useMemo(() => [
      { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding', id:'dashboard',       isActive: pathname === '/Client/Onboarding' },
-     { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/login',             id:'login',           isActive: pathname === '/login' },
+     { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/Client/Login',      id:'login',           isActive: pathname === '/Client/Login' },
      { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/register',          id:'register',        isActive: pathname === '/register' },
      { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/verify-email',      id:'verify-email',    isActive: pathname === '/verify-email' },
      { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/reset-password',    id:'reset-password',  isActive: pathname === '/reset-password' },

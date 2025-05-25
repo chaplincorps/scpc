@@ -103,13 +103,17 @@ module.exports = {
                "50%": { transform: "scale(1.2)" },
              },
           },
+           screens: {
+            midlg: '900px', 
+            },
    	}
    },
    plugins: [require("tailwindcss-animate"),
       require('@tailwindcss/aspect-ratio'),
    ],
    fontFamily: {
-      inter: ['Inter', 'sans-serif'], 
+      sans: ['Inter', 'sans-serif'], 
+      inter: ['Inter', 'sans-serif']
     },
    
  }

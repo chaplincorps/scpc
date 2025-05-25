@@ -10,7 +10,10 @@ import { Label } from "@/components/ui/label"
 
 const formSchema = z
   .object({
-    email: z.string().email({ message: "Please enter a valid email address" }),
+    applicationId: z
+      .string()
+      .min(1, { message: "Application ID is required" })
+      .regex(/^[A-Z0-9]+$/, { message: "Application ID must contain only uppercase letters and numbers" }),
     password: z
       .string()
       .min(8, { message: "Password must be at least 8 characters" })
@@ -93,53 +96,54 @@ const FloatingLabelInput = ({
 const LoginLogic = () => {
    const [isLoading, setIsLoading] = useState(false)
    const [showPassword, setShowPassword] = useState(false)
-   const [isEmailFocused, setIsEmailFocused] = useState(false)
+   const [isApplicationIdFocused, setIsApplicationIdFocused] = useState(false)
    const [isPasswordFocused, setIsPasswordFocused] = useState(false)
 
-const {
-   register,
-   handleSubmit,
-   formState: { errors, dirtyFields },
-   watch,
- } = useForm({
-   resolver: zodResolver(formSchema),
-   mode: "onChange",
-   defaultValues: {
-     email: "",
-     password: "",
-   },
- })
+   const {
+      register,
+      handleSubmit,
+      formState: { errors, dirtyFields },
+      watch,
+   } = useForm({
+      resolver: zodResolver(formSchema),
+      mode: "onChange",
+      defaultValues: {
+         applicationId: "",
+         password: "",
+      },
+   })
  
- // Watch values for floating labels
-   const watchedEmail = watch("email")
+   // Watch values for floating labels
+   const watchedApplicationId = watch("applicationId")
    const watchedPassword = watch("password")
    
-   // Check if individual fields ae valid
-   const isEmailValid = dirtyFields.email && !errors.email
+   // Check if individual fields are valid
+   const isApplicationIdValid = dirtyFields.applicationId && !errors.applicationId
    const isPasswordValid = dirtyFields.password && !errors.password
 
-    // Check if form is ready to submit
-  const isFormReadyToSubmit =
-   isEmailValid && isPasswordValid && !isLoading
+   // Check if form is ready to submit
+   const isFormReadyToSubmit = isApplicationIdValid && isPasswordValid && !isLoading
 
-   const HandleLogin = async(e) =>{
-      try{
-         setIsLoading(True)
-         
-      }
-      catch(error){
-         
+   const HandleLogin = async(data) => {
+      try {
+         setIsLoading(true)
+         console.log('Login data:', data)
+         // Add your login logic here
+      } catch(error) {
+         console.error('Login error:', error)
+      } finally {
+         setIsLoading(false)
       }
    }
 
-   return{
+   return {
       HandleLogin,
       register,
       errors,
-      isEmailFocused,
-      setIsEmailFocused,
-      watchedEmail,
-      isEmailValid,
+      isApplicationIdFocused,
+      setIsApplicationIdFocused,
+      watchedApplicationId,
+      isApplicationIdValid,
       showPassword,
       setShowPassword,
       isPasswordFocused,
@@ -148,7 +152,8 @@ const {
       isPasswordValid,
       isFormReadyToSubmit,
       FloatingLabelInput,
-      handleSubmit
+      handleSubmit,
+      isLoading
    }
 }
 

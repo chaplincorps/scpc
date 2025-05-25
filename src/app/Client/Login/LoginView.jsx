@@ -2,20 +2,20 @@
 
 import BackgroundImage from '@images/WaterMark_Logo.png'
 import { HeartHandshake, Quote, Apple, Chrome, LogIn, Loader} from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import LoginLogic from './LoginLogic';
 
 const LoginView = () => {
-   const {HandleLogin,
+   const {
+      HandleLogin,
       register,
       errors,
-      isEmailFocused,
-      setIsEmailFocused,
-      watchedEmail,
-      isLoading,
-      isEmailValid,
+      isApplicationIdFocused,
+      setIsApplicationIdFocused,
+      watchedApplicationId,
+      isApplicationIdValid,
       showPassword,
       setShowPassword,
       isPasswordFocused,
@@ -24,12 +24,14 @@ const LoginView = () => {
       isPasswordValid,
       isFormReadyToSubmit,
       FloatingLabelInput,
-      handleSubmit} = LoginLogic()
+      handleSubmit,
+      isLoading
+   } = LoginLogic()
       
    return (
-      <div className="flex min-h-[calc(100vh-49px)] md:flex-row">
+      <div className="flex min-h-[calc(100vh-49px)] lg:flex-row">
             {/* Left Side - Login Form */}
-            <div className="w-full md:w-[50%] bg-white flex items-center justify-center p-2">
+            <div className="w-full lg:w-[50%] bg-white flex items-center justify-center p-2">
                <Card className="w-full shadow-lg">
                   <CardHeader className="space-y-1">
                      <CardTitle className="text-2xl font-bold text-center text-[#006699]">Welcome Back</CardTitle>
@@ -37,19 +39,19 @@ const LoginView = () => {
                   </CardHeader>
                   <CardContent>
                      <form onSubmit={handleSubmit(HandleLogin)} className="space-y-1">
-                        {/* Email Field */}
+                        {/* Application ID Field */}
                         <div className="relative">
                            <FloatingLabelInput
-                              id="email"
-                              label="Email Address"
-                              type="email"
-                              register={register("email")}
-                              errors={errors.email}
-                              isFocused={isEmailFocused}
-                              setIsFocused={setIsEmailFocused}
-                              watchedValue={watchedEmail}
+                              id="applicationId"
+                              label="Application ID"
+                              type="text"
+                              register={register("applicationId")}
+                              errors={errors.applicationId}
+                              isFocused={isApplicationIdFocused}
+                              setIsFocused={setIsApplicationIdFocused}
+                              watchedValue={watchedApplicationId}
                               disabled={isLoading}
-                              isValid={isEmailValid}
+                              isValid={isApplicationIdValid}
                            />
                         </div>
 
@@ -89,7 +91,7 @@ const LoginView = () => {
                                  </div>
                               ) : (
                                  <>
-                                     Sign In
+                                     LogIn
                                     <LogIn  className="w-4 h-4" />
                                  </>
                               )}
@@ -122,20 +124,21 @@ const LoginView = () => {
                                  Apple
                               </Button>
                         </div>
-
-                        <div className="flex items-center justify-center text-sm">
-                           <p className='mr-1 text-[#006699] opacity-85'>Not yet a chaplain? {" "}</p>
-                           <Link href="#" className="text-[#006699] font-bold hover:underline">
-                              Application Portal
-                           </Link>
-                        </div>
                      </form>
                   </CardContent>
+                  <CardFooter className="flex justify-center border-t bg-gray-50">
+                     <div className="flex items-center justify-center text-sm">
+                        <p className='mr-1 text-[#006699] opacity-85'>Not yet a chaplain?</p>
+                        <Link href="/Client/Registration" className="text-[#006699] font-bold hover:underline">
+                           Application Portal
+                        </Link>
+                     </div>
+                  </CardFooter>
                </Card>
             </div>
 
             {/* Right Side - Branding Panel */}
-            <div className="hidden md:flex md:w-[50%] bg-[#006699] relative inset-0 items-center justify-center">
+            <div className="hidden lg:flex lg:w-[50%] bg-[#006699] relative inset-0 items-center justify-center">
                {/* Background color overlay */}
                <div 
                   className="absolute inset-0 bg-[#006699]/70 z-10"

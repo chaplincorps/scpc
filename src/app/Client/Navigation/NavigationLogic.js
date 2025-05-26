@@ -59,9 +59,9 @@ const NavigationLogic = () => {
    }
  
    const publicNavigationItems = useMemo(() => [
-     { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding', id:'dashboard',       isActive: pathname === '/Client/Onboarding' },
-     { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/Client/Login',      id:'login',           isActive: pathname === '/Client/Login' },
-     { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/register',          id:'register',        isActive: pathname === '/register' },
+     { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding',   id:'dashboard',       isActive: pathname === '/Client/Onboarding' },
+     { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/Client/Login',        id:'login',           isActive: pathname === '/Client/Login' },
+     { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/Client/Registration', id:'register',        isActive: pathname === '/Client/Registration' },
      { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/verify-email',      id:'verify-email',    isActive: pathname === '/verify-email' },
      { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/reset-password',    id:'reset-password',  isActive: pathname === '/reset-password' },
      { title: translate('navigation.gallery'),         icon: Image,             url: '/gallery',           id:'gallery',         isActive: pathname === '/gallery' },
@@ -107,8 +107,8 @@ const NavigationLogic = () => {
        title: '',
        icon: () => (
          <div className="flex items-center mb-2">
-           <Skeleton className="h-6 w-6 rounded-full" />
-           <Skeleton className="ml-2 h-6 w-48 rounded" />
+           <Skeleton className="w-6 h-6 rounded-full" />
+           <Skeleton className="w-48 h-6 ml-2 rounded" />
          </div>
        )
      }))
@@ -120,8 +120,8 @@ const NavigationLogic = () => {
        isSkeleton: true,
        icon: () => (
          <div className="flex items-center mb-2">
-           <Skeleton className="h-4 w-4 rounded" />
-           <Skeleton className="ml-2 h-4 w-20" />
+           <Skeleton className="w-4 h-4 rounded" />
+           <Skeleton className="w-20 h-4 ml-2" />
          </div>
        )
      }))
@@ -134,7 +134,7 @@ const NavigationLogic = () => {
    // Get current page title
    function getCurrentPageTitle() {
      if (!authInitialized) {
-       return <Skeleton className="h-6 w-24 rounded" />
+       return <Skeleton className="w-24 h-6 rounded" />
      }
      const items = isAuthenticated ? authenticatedNavigationItems :publicNavigationItems
      const active = items.find(i => i.isActive)

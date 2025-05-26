@@ -1,7 +1,7 @@
 'use client'
 
 import BackgroundImage from '@images/WaterMark_Logo.png'
-import { HeartHandshake, Quote, Apple, Chrome, Loader, ArrowRightIcon, MailCheck, Mail, Shield, KeyRound} from 'lucide-react';
+import { HeartHandshake, Quote, Apple, Chrome, Loader, ArrowRightIcon, CheckCircle, Check, Copy} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import {  Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
@@ -44,7 +44,9 @@ const RegistrationView = () => {
       verificationToken,
       setVerificationToken,
       handleVerificationToken,
-      handleCompletion
+      copied,
+      applicationId,
+      copyToClipboard
    } = RegistrationLogic()
 
    const{
@@ -253,44 +255,36 @@ const RegistrationView = () => {
                                  </p>
                               </div>
 
-                              <form onSubmit={handleVerificationToken} className="space-y-6">
+                              <form className="space-y-6">
                                  <div className="space-y-4">
                                     <div className="flex justify-center">
-                                       <InputOTP maxLength={8} value={verificationToken} onChange={handleVerificationToken}
+                                       <InputOTP
+                                          maxLength={8}
+                                          value={verificationToken}
+                                          onChange={handleVerificationToken}
+                                          disabled={isLoading}
                                        >
                                           <InputOTPGroup>
-                                             <InputOTPSlot
-                                                index={0}
-                                                className="w-10 h-10 border-[#006699]"
-                                             />
-                                             <InputOTPSlot
-                                                index={1}
-                                                className="w-10 h-10 border-[#006699]"/>
-                                             <InputOTPSlot
-                                                index={2}
-                                                className="w-10 h-10 border-[#006699]"/>
-                                             <InputOTPSlot
-                                                index={3}
-                                                className="w-10 h-10 border-[#006699]"/>
-                                             <InputOTPSlot
-                                                index={4}  
-                                                className="w-10 h-10 border-[#006699]"/>
-                                             <InputOTPSlot
-                                                index={5}
-                                                className="w-10 h-10 border-[#006699]"/>
-                                             <InputOTPSlot
-                                                index={6}
-                                                className="w-10 h-10 border-[#006699]"/>
-                                             <InputOTPSlot
-                                                index={7}
-                                                className="w-10 h-10 border-[#006699]"/>
+                                             {Array.from({ length: 8 }).map((_, index) => (
+                                                <InputOTPSlot 
+                                                   key={index} 
+                                                   index={index}
+                                                   className="w-10 h-10 border-[#006699] text-[#006699]"
+                                                />
+                                             ))}
                                           </InputOTPGroup>
                                        </InputOTP>
                                     </div>
 
+                                    {isLoading && (
+                                       <div className="flex justify-center">
+                                          <Loader className="w-6 h-6 animate-spin text-[#006699]" />
+                                       </div>
+                                    )}
+
                                     <div className="flex flex-col items-center justify-center gap-2 mt-2">
                                        <div className="flex flex-col items-center justify-center gap-1 mt-2 md:flex-row">
-                                          <p className="text-sm text-center text-gray-500">Didn't receive a verification token?</p>
+                                          <p className="text-sm text-center text-[#006699]">Didn't receive a verification token?</p>
                                           <button 
                                              type="button" 
                                              onClick={handleResendToken}
@@ -302,7 +296,7 @@ const RegistrationView = () => {
                                                    <Loader className="w-4 h-4 animate-spin" />
                                                 </div>
                                              ) : (
-                                                <span>Resend verification token</span>
+                                                <b>Resend verification token</b>
                                              )}
                                           </button>
                                        </div>
@@ -323,6 +317,59 @@ const RegistrationView = () => {
                                  >
                                     Register
                                  </p>
+                              </div>
+                           </CardFooter>
+                        </TabsContent>
+                        
+                        <TabsContent value="complete" className="m-0">
+                           <CardContent className="p-6 lg:p-8">
+                              <div className="p-4 mt-4 lg:mt-0 mb-3 border border-[#006699]/10 rounded-md bg-[#006699]/5">
+                                 <p className="flex items-start gap-2 text-sm text-[#006699] w-full">
+                                    <span className="bg-[#006699]/90 text-white rounded-full h-5 w-5 flex items-center justify-center text-xs flex-shrink-0 mt-0.5">
+                                       3
+                                    </span>
+                                    <span className="flex-1">
+                                       <strong>Step 3 of 3:</strong> Registration complete. Use the Application ID sent to{" "}
+                                       <b className="font-medium">{email || "your email"}</b> and  your generated password to login. 
+                                    </span>
+                                 </p>
+                              </div>
+
+                              <div className="flex justify-center">
+                                    <div className="flex items-center justify-center w-16 h-16 bg-green-100 rounded-full">
+                                    <CheckCircle className="w-10 h-10 text-green-600" />
+                                    </div>
+                              </div>
+
+                               <div className="space-y-4 text-center">
+                                 <h3 className="text-lg font-semibold text-[#006699]">Your Application ID</h3>
+                                 <p className="text-sm text-[#006699]">Please save this ID as you'll need it for future reference</p>
+
+                                 <div className="p-4 border-2 border-gray-300 border-dashed rounded-lg bg-gray-50">
+                                 <div className="flex items-center justify-between">
+                                    <code className="text-lg font-mono font-bold text-[#006699]">
+                                       {applicationId || "APP-SAMPLE123"}
+                                    </code>
+                                    <Button
+                                       variant="outline"
+                                       size="sm"
+                                       onClick={copyToClipboard}
+                                       className="ml-2 border-[#006699] text-[#006699] hover:bg-[#006699] hover:text-white"
+                                    >
+                                       {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                                    </Button>
+                                 </div>
+                                 </div>
+                              </div>
+                              
+                        
+                           </CardContent>
+                            <CardFooter className="flex justify-center pt-2 border-t bg-gray-50">
+                              <div className="flex items-center justify-center text-sm">
+                                 <p className='mr-1 text-[#006699] opacity-85'>Good to go?</p>
+                                 <Link href="/Client/Login"  className="font-medium text-[#006699] cursor-pointer" >
+                                    LogIn
+                                 </Link>
                               </div>
                            </CardFooter>
                         </TabsContent>

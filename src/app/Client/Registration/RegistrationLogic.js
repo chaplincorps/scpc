@@ -125,6 +125,10 @@ const RegistrationLogic = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [activeTab, setActiveTab] = useState("register")
   const [verificationToken, setVerificationToken] = useState("")
+  const [copied, setCopied] = useState(false)
+  const [applicationId, setApplicationId] = useState("")
+
+
   // Focus states for floating labels
   const [isEmailFocused, setIsEmailFocused] = useState(false)
   const [isPasswordFocused, setIsPasswordFocused] = useState(false)
@@ -177,6 +181,7 @@ const RegistrationLogic = () => {
    setIsLoading(true)
    try {
       setEmail(data.email)
+      reset()
       setActiveTab("verification")
    } 
    catch (error) {
@@ -187,25 +192,41 @@ const RegistrationLogic = () => {
    }
  }
 
- const handleVerificationToken = async (value) => {
-   setIsLoading(true)
-   try {
-      reset()
-      setActiveTab("complete")
-      setVerificationToken("")
-      clearEmail()   } 
-   catch (error) {
-
-   } 
-   finally {
-     setIsLoading(false)
+ const handleVerificationToken = (value) => {
+   setVerificationToken(value)
+   
+   // Automatically trigger verification when all 8 digits are entered
+   if (value.length === 8) {
+      setIsLoading(true)
+      try {
+         const generatedId = `APP${Math.random().toString(36).substr(2, 9).toUpperCase()}`
+         setApplicationId(generatedId)
+         // For now, just simulate success and move to next stage
+         setTimeout(() => {
+            setActiveTab("complete")
+            setVerificationToken("")
+            clearEmail()
+         }, 1000)
+      } 
+      catch (error) {
+         console.error('Verification error:', error)
+      } 
+      finally {
+         setIsLoading(false)
+      }
    }
  }
+ 
 
-const handleCompletion = () => {
-   setRegistrationSuccess(false)
-   setActiveTab("register")
-}
+const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(applicationId)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (err) {
+      toast.error("Failed to copy: ", err)
+    }
+  }
 
    return {
       email,
@@ -239,7 +260,9 @@ const handleCompletion = () => {
       verificationToken,
       setVerificationToken,
       handleVerificationToken,
-      handleCompletion
+      copied,
+      applicationId,
+      copyToClipboard
    }
 }
 

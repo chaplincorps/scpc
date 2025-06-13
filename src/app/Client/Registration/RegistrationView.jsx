@@ -1,7 +1,7 @@
 'use client'
 
-import BackgroundImage from '@images/WaterMark_Logo.png'
-import { HeartHandshake, Quote, Apple, Chrome, Loader, ArrowRightIcon, CheckCircle, Check, Copy} from 'lucide-react';
+import BackgroundImage from '@images/White_Logo.png'
+import { HeartHandshake, Quote, Facebook , Chrome, Loader, ArrowRightIcon, CheckCircle, Check, Copy} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import {  Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
@@ -9,10 +9,10 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import Link from 'next/link';
 import RegistrationLogic from './RegistrationLogic';
-import ResendToken from '@/utils/ResendToken';
+import useResendToken from '@/hooks/useResendToken';
 
-const RegistrationView = () => {
-   const{
+export default function RegistrationView() {
+    const{
       email,
       activeTab,
       setActiveTab,
@@ -42,11 +42,14 @@ const RegistrationView = () => {
       handleTermsChange,
       watchedTerms,
       verificationToken,
-      setVerificationToken,
       handleVerificationToken,
       copied,
       applicationId,
-      copyToClipboard
+      copyToClipboard,
+      handleGoogleSignIn,
+      isGoogleLoading,
+      handleFacebookSignIn,
+      isFacebookLoading
    } = RegistrationLogic()
 
    const{
@@ -54,7 +57,7 @@ const RegistrationView = () => {
       countdown,
       isResendDisabled,
       isResendLoading,
-   } = ResendToken()
+   } = useResendToken()
    
    return(
             <div className="flex min-h-[calc(100vh-49px)] lg:flex-row">
@@ -101,7 +104,7 @@ const RegistrationView = () => {
                                        1
                                     </span>
                                     <span>
-                                       <strong>Step 1 of 3:</strong> Enter your email and password to sign up, we’ll email you a verification token...
+                                       <strong>Step 1 of 3:</strong> Enter your email and password to sign up, we'll email you a verification token...
                                     </span>
                                  </p>
                               </div>
@@ -215,17 +218,29 @@ const RegistrationView = () => {
                                              variant="outline"
                                              type="button"
                                              className="w-full p-5 border-[#006699] text-[#006699] hover:bg-[#006699]/70 hover:text-white"
+                                             onClick={handleGoogleSignIn}
+                                             disabled={isGoogleLoading}
                                           >
-                                             <Chrome className="w-4 h-4 mr-2" />
-                                             Google
+                                             {isGoogleLoading ? (
+                                                <Loader className="w-4 h-4 mr-2 animate-spin" />
+                                             ) : (
+                                                <Chrome className="w-4 h-4 mr-2" />
+                                             )}
+                                             {isGoogleLoading ? "Connecting..." : "Google"}
                                           </Button>
                                           <Button
                                              variant="outline"
                                              type="button"
                                              className="w-full p-5 border-[#006699] text-[#006699] hover:bg-[#006699]/70 hover:text-white"
+                                             onClick={handleFacebookSignIn}
+                                             disabled={isFacebookLoading}
                                           >
-                                             <Apple className="w-4 h-4 mr-2" />
-                                             Apple
+                                             {isFacebookLoading ? (
+                                                <Loader className="w-4 h-4 mr-2 animate-spin" />
+                                             ) : (
+                                                <Facebook className="w-4 h-4 mr-2" />
+                                             )}
+                                             {isFacebookLoading ? "Connecting..." : "Facebook"}
                                           </Button>
                                     </div>
                               </form>
@@ -310,9 +325,9 @@ const RegistrationView = () => {
                               </form>
                            </CardContent>
                             <CardFooter className="flex justify-center pt-2 border-t bg-gray-50">
-                              <div className="flex items-center justify-center text-sm">
+                              <div className="flex items-center justify-center text-sm cursor-pointer">
                                  <p className='mr-1 text-[#006699] opacity-85'>Back To Registration?</p>
-                                 <p className="font-medium text-[#006699] cursor-pointer" 
+                                 <p className="font-medium text-[#006699]" 
                                   onClick={() => setActiveTab("register")}
                                  >
                                     Register
@@ -348,7 +363,7 @@ const RegistrationView = () => {
                                  <div className="p-4 border-2 border-gray-300 border-dashed rounded-lg bg-gray-50">
                                  <div className="flex items-center justify-between">
                                     <code className="text-lg font-mono font-bold text-[#006699]">
-                                       {applicationId || "APP-SAMPLE123"}
+                                       {applicationId || "APPTEST123"}
                                     </code>
                                     <Button
                                        variant="outline"
@@ -367,7 +382,7 @@ const RegistrationView = () => {
                             <CardFooter className="flex justify-center pt-2 border-t bg-gray-50">
                               <div className="flex items-center justify-center text-sm">
                                  <p className='mr-1 text-[#006699] opacity-85'>Good to go?</p>
-                                 <Link href="/Client/Login"  className="font-medium text-[#006699] cursor-pointer" >
+                                 <Link href="/Client/Login"  className="font-medium text-[#006699] cursor-pointer hover:underline" >
                                     LogIn
                                  </Link>
                               </div>
@@ -426,5 +441,3 @@ const RegistrationView = () => {
    )
 
 }
-
-export default RegistrationView;

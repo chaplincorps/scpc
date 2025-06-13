@@ -1,18 +1,17 @@
 'use client'
 
-import OnboardingLoader from './OnboardingLoader'
-import OnboardingView from './OnboardingView'
+import DashboardSkeleton from './DashboardSkeleton'
+import DashboardView from './DashboardView'
 import { useAuthStore } from '@/store/authStore'
 
-export default function ClientOnboardingPage() {
-
+export default function DashboardContainer() {
    const loading = useAuthStore(state => state.loading)
    const initialized = useAuthStore(state => state.initialized)
    const authInitialized = initialized && !loading
 
    if(!authInitialized) {
-      return <OnboardingLoader />
+      return <DashboardSkeleton />
    }
 
-  return <OnboardingView />
-}
+   return <DashboardView />
+} 

@@ -1,13 +1,13 @@
 'use client'
 
-import BackgroundImage from '@images/WaterMark_Logo.png'
-import { HeartHandshake, Quote, Apple, Chrome, LogIn, Loader} from 'lucide-react';
+import BackgroundImage from '@images/White_Logo.png'
+import { HeartHandshake, Quote, Facebook , Chrome, LogIn, Loader} from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card"
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import LoginLogic from './LoginLogic';
-
-const LoginView = () => {
+import AccessInBridgeUI from '@/components/custom/AccessInBridgeUI';
+export default function LoginView() {
    const {
       HandleLogin,
       register,
@@ -25,11 +25,21 @@ const LoginView = () => {
       isFormReadyToSubmit,
       FloatingLabelInput,
       handleSubmit,
-      isLoading
+      isLoading,
+      isTransitioning,
+      handleGoogleSignIn,
+      isGoogleLoading,
+      handleFacebookSignIn,
+      isFacebookLoading
    } = LoginLogic()
       
+   if (isTransitioning) {
+      return <AccessInBridgeUI />
+   }
+
    return (
-      <div className="flex min-h-[calc(100vh-49px)] lg:flex-row">
+      <>
+         <div className="flex min-h-[calc(100vh-49px)] lg:flex-row">
             {/* Left Side - Login Form */}
             <div className="w-full lg:w-[50%] bg-white flex items-center justify-center p-2">
                <Card className="w-full shadow-lg">
@@ -50,7 +60,7 @@ const LoginView = () => {
                               isFocused={isApplicationIdFocused}
                               setIsFocused={setIsApplicationIdFocused}
                               watchedValue={watchedApplicationId}
-                              disabled={isLoading}
+                              disabled={isLoading || isTransitioning}
                               isValid={isApplicationIdValid}
                            />
                         </div>
@@ -66,7 +76,7 @@ const LoginView = () => {
                               isFocused={isPasswordFocused}
                               setIsFocused={setIsPasswordFocused}
                               watchedValue={watchedPassword}
-                              disabled={isLoading}
+                              disabled={isLoading || isTransitioning}
                               showToggle={true}
                               toggleState={showPassword}
                               onToggle={() => setShowPassword(!showPassword)}
@@ -83,7 +93,7 @@ const LoginView = () => {
                         <Button 
                            type="submit" 
                            className="mb-4 p-6 w-full bg-[#006699] hover:bg-[#005588] text-white cursor-pointer"
-                           disabled={!isFormReadyToSubmit}
+                           disabled={!isFormReadyToSubmit || isTransitioning}
                         >
                           {isLoading ? (
                                  <div className="flex items-center gap-2">
@@ -111,17 +121,29 @@ const LoginView = () => {
                                  variant="outline"
                                  type="button"
                                  className="w-full p-6 border-[#006699] text-[#006699] hover:bg-[#006699]/70 hover:text-white"
+                                 onClick={handleGoogleSignIn}
+                                 disabled={isTransitioning || isGoogleLoading}
                               >
-                                 <Chrome className="w-4 h-4 mr-2" />
-                                 Google
+                                 {isGoogleLoading ? (
+                                    <Loader className="w-4 h-4 mr-2 animate-spin" />
+                                 ) : (
+                                    <Chrome className="w-4 h-4 mr-2" />
+                                 )}
+                                 {isGoogleLoading ? "Connecting..." : "Google"}
                               </Button>
                               <Button
                                  variant="outline"
                                  type="button"
                                  className="w-full p-6 border-[#006699] text-[#006699] hover:bg-[#006699]/70 hover:text-white"
+                                 onClick={handleFacebookSignIn}
+                                 disabled={isTransitioning || isFacebookLoading}
                               >
-                                 <Apple className="w-4 h-4 mr-2" />
-                                 Apple
+                                 {isFacebookLoading ? (
+                                    <Loader className="w-4 h-4 mr-2 animate-spin" />
+                                 ) : (
+                                    <Facebook className="w-4 h-4 mr-2" />
+                                 )}
+                                 {isFacebookLoading ? "Connecting..." : "Facebook"}
                               </Button>
                         </div>
                      </form>
@@ -179,8 +201,7 @@ const LoginView = () => {
                   </div>
                </div>
             </div>
-      </div>
+         </div>
+      </>
    )
 }
-
-export default LoginView;

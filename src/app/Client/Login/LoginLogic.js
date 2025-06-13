@@ -1,12 +1,19 @@
-'use-client'
+'use client'
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { toast } from "react-hot-toast"
+import axios from "axios"
+import { CLIENT_ENDPOINTS } from '@/config/apiEndpoints'
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
 import { Eye, EyeOff } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useAuthStore } from '@/store/authStore'
+import { useDashboardStore } from '@/store/dashboardStore'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 const formSchema = z
   .object({
@@ -81,9 +88,25 @@ const FloatingLabelInput = ({
            onClick={onToggle}
          >
            {toggleState ? (
-             <EyeOff className="w-5 h-5 text-[#006699] cursor-pointer" />
+             <EyeOff className={`w-5 h-5 cursor-pointer
+               ${
+                  errors
+                     ? "!text-red-500"
+                     : isValid
+                     ? "!text-[#28A745]"
+                     : "!text-[#006699]"
+               }`} 
+            />
            ) : (
-             <Eye className="w-5 h-5 text-[#006699] cursor-pointer" />
+             <Eye className={`w-5 h-5 cursor-pointer
+               ${
+                  errors
+                     ? "!text-red-500"
+                     : isValid
+                     ? "!text-[#28A745]"
+                     : "!text-[#006699]"
+               }`} 
+            />
            )}
          </div>
        )}
@@ -93,11 +116,39 @@ const FloatingLabelInput = ({
    )
  }
  
-const LoginLogic = () => {
+export default function LoginLogic(){
+   const router = useRouter()
    const [isLoading, setIsLoading] = useState(false)
+   const [isTransitioning, setIsTransitioning] = useState(false)
    const [showPassword, setShowPassword] = useState(false)
    const [isApplicationIdFocused, setIsApplicationIdFocused] = useState(false)
    const [isPasswordFocused, setIsPasswordFocused] = useState(false)
+   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+   const [isFacebookLoading, setIsFacebookLoading] = useState(false)
+
+   // Check for error parameters in URL
+   useEffect(() => {
+      const searchParams = new URLSearchParams(window.location.search)
+      const error = searchParams.get('error')
+      
+      if (error) {
+         const errorMessages = {
+            'no_code': 'Social login failed: No authorization code received',
+            'signin_failed': 'Social login failed: Unable to sign in',
+            'auth_failed': 'Social login failed: Authentication error',
+            'id_generation_failed': 'Social login failed: Could not generate unique ID',
+            'registration_failed': 'Social login failed: Registration error',
+            'unexpected_error': 'An unexpected error occurred during social login'
+         }
+
+         const message = errorMessages[error] || 'Social login failed'
+         toast.error(message)
+         
+         // Remove the error parameter from URL without refreshing the page
+         const newUrl = window.location.pathname
+         window.history.replaceState({}, '', newUrl)
+      }
+   }, [])
 
    const {
       register,
@@ -125,16 +176,128 @@ const LoginLogic = () => {
    const isFormReadyToSubmit = isApplicationIdValid && isPasswordValid && !isLoading
 
    const HandleLogin = async(data) => {
+      setIsLoading(true)
+
+      // Get store actions
+      const { setUser, clearUser } = useAuthStore.getState()
+      const { setDashboardData, setError: setDashboardError } = useDashboardStore.getState()
+
       try {
-         setIsLoading(true)
-         console.log('Login data:', data)
-         // Add your login logic here
-      } catch(error) {
-         console.error('Login error:', error)
-      } finally {
+         const response = await axios.post(CLIENT_ENDPOINTS.AUTH.LOGIN, {
+            application_id: data.applicationId,
+            password: data.password
+         })
+         
+         if (response.status === 200) {
+            // Create Supabase client - this will automatically handle cookies
+            const supabase = createClientComponentClient()
+            
+            if (response.data.session) {
+               try {
+                  // Set the session from the server response
+                  const { error } = await supabase.auth.setSession({
+                     access_token: response.data.session.access_token,
+                     refresh_token: response.data.session.refresh_token
+                  })
+                  
+                  if (error) {
+                     console.error('Session setup failed:', error)
+                     toast.error('Failed to setup session')
+                     return
+                  }
+               } catch (sessionError) {
+                  toast.error('Session setup error')
+                  console.error('Session setup error:', sessionError)
+                  return
+               }
+            }
+            
+            // Update store with user data
+            setUser(response.data.user)
+
+            // Start transition and navigate
+            setIsTransitioning(true)
+            router.push('/Client/Dashboard', { 
+               onSuccess: async () => {
+                  // Pre-fetch dashboard data after navigation starts
+                  try {
+                     console.log('Pre-fetching dashboard data...')
+                     const dashboardResponse = await axios.get(CLIENT_ENDPOINTS.DASHBOARD)
+                     
+                     // Store dashboard data in the dashboard store
+                     setDashboardData(dashboardResponse.data)
+                     console.log('Dashboard data pre-fetched and stored:', dashboardResponse.data)
+                     toast.success('Login successful')
+                  } 
+                  catch (dashboardError) {
+                     console.error('Dashboard pre-fetch failed:', dashboardError)
+                     // Set error in dashboard store but don't block navigation
+                     setDashboardError(dashboardError.response?.data?.error || 'Failed to load dashboard data')
+                     toast.success('Login successful')
+                  }
+               }
+            })
+         }
+      } 
+      catch(error) {
+         // Clear user in zustand store on login failure
+         clearUser()
+         if (error.response) {
+            const errorMessage = error.response.data.error || error.response.data.message || "Login failed. Please try again."
+            toast.error(errorMessage)
+            console.error('Login error:', errorMessage)
+         } else if (error.request) {
+            toast.error("No response from server. Please check your connection.")
+            console.error('No response received:', error.request)
+         } else {
+            toast.error("An error occurred while setting up the request")
+            console.error('Request setup error:', error.message)
+         }
+      } 
+      finally {
          setIsLoading(false)
       }
    }
+
+   const handleGoogleSignIn = async () => {
+    try {
+      setIsGoogleLoading(true)
+      
+      // Call our API endpoint to initiate Google OAuth
+      const response = await axios.post(CLIENT_ENDPOINTS.AUTH.GOOGLE)
+      
+      if (response.data?.url) {
+        // Redirect to Google's OAuth page
+        window.location.href = response.data.url
+      } else {
+        toast.error('Failed to initialize Google sign in')
+      }
+    } catch (error) {
+      console.error('Google sign in error:', error)
+      toast.error(error.response?.data?.error || 'Failed to initialize Google sign in')
+      setIsGoogleLoading(false)
+    }
+  }
+
+  const handleFacebookSignIn = async () => {
+    try {
+      setIsFacebookLoading(true)
+      
+      // Call our API endpoint to initiate Facebook OAuth
+      const response = await axios.post(CLIENT_ENDPOINTS.AUTH.FACEBOOK)
+      
+      if (response.data?.url) {
+        // Redirect to Facebook's OAuth page
+        window.location.href = response.data.url
+      } else {
+        toast.error('Failed to initialize Facebook sign in')
+      }
+    } catch (error) {
+      console.error('Facebook sign in error:', error)
+      toast.error(error.response?.data?.error || 'Failed to initialize Facebook sign in')
+      setIsFacebookLoading(false)
+    }
+  }
 
    return {
       HandleLogin,
@@ -153,8 +316,11 @@ const LoginLogic = () => {
       isFormReadyToSubmit,
       FloatingLabelInput,
       handleSubmit,
-      isLoading
+      isLoading,
+      isTransitioning,
+      handleGoogleSignIn,
+      isGoogleLoading,
+      handleFacebookSignIn,
+      isFacebookLoading
    }
 }
-
-export default LoginLogic;

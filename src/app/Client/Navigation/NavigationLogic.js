@@ -28,7 +28,7 @@ import { useAuthStore } from '@/store/authStore'
 import { useLanguageStore } from '@/store/languageStore'
 import { useTranslation } from '@/utils/translations'
 
-const NavigationLogic = () => {
+export default function NavigationLogic() {
    const pathname = usePathname()
    const user = useAuthStore(state => state.user)
    const loading = useAuthStore(state => state.loading)
@@ -62,7 +62,7 @@ const NavigationLogic = () => {
      { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding',   id:'dashboard',       isActive: pathname === '/Client/Onboarding' },
      { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/Client/Login',        id:'login',           isActive: pathname === '/Client/Login' },
      { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/Client/Registration', id:'register',        isActive: pathname === '/Client/Registration' },
-     { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/verify-email',      id:'verify-email',    isActive: pathname === '/verify-email' },
+     { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/Client/Verify-Email', id:'verify-email',    isActive: pathname === '/Client/Verify-Email' },
      { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/reset-password',    id:'reset-password',  isActive: pathname === '/reset-password' },
      { title: translate('navigation.gallery'),         icon: Image,             url: '/gallery',           id:'gallery',         isActive: pathname === '/gallery' },
      { title: translate('navigation.events'),          icon: Calendar,          url: '/events',            id:'events',          isActive: pathname === '/events' },
@@ -73,7 +73,7 @@ const NavigationLogic = () => {
    ], [pathname, translate, currentLanguage])
  
    const authenticatedNavigationItems = useMemo(() => [
-     { title: translate('navigation.dashboard'),        icon: LayoutDashboard,  url: '/client/dashboard', id:'client-dashboard',    isActive: pathname === '/client/dashboard' },
+     { title: translate('navigation.dashboard'),        icon: LayoutDashboard,  url: '/Client/Dashboard', id:'client-dashboard',    isActive: pathname === '/Client/Dashboard' },
      { title: translate('navigation.cbtExam'),         icon: BookOpenCheck,    url: '/client/cbt-exam', id:'cbt-exam',     isActive: pathname === '/client/cbt-exam' },
      { title: translate('navigation.cbtResults'),      icon: Scroll,            url: '/client/cbt-results',id:'/cbt-results',   isActive: pathname === '/client/cbt-results' },
      { title: translate('navigation.applicationForm'), icon: FileText,         url: '/client/application',id:'application',   isActive: pathname === '/client/application' },
@@ -81,7 +81,7 @@ const NavigationLogic = () => {
    ], [pathname, translate, currentLanguage])
  
    const dropdownItems = useMemo(() => [
-     { title: translate('navigation.profile'),   icon: User,     url: '/client/profile' },
+     { title: translate('navigation.profile'),   icon: User,     url: '/Client/profile' },
      { title: translate('navigation.settings'),  icon: Settings, url: '/client/settings' },
      { title: translate('navigation.support'),   icon: Headset,  url: '/client/support' },
      { title: translate('navigation.logout'),    icon: LogOut,   url: '/logout' },
@@ -153,5 +153,3 @@ const NavigationLogic = () => {
      currentLanguage: getCurrentLanguage(),
    }
 }
-
-export default NavigationLogic

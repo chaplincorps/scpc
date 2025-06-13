@@ -2,18 +2,36 @@ import { cookies } from 'next/headers'
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export async function getUserFromCookie() {
-  const cookieStore = await cookies()
+  try {
+    // Await cookies() before using it
+    const cookieStore = await cookies()
 
-  // create a server-side Supabase client that reads from those cookies
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+    // Create an SSR‐only Supabase client bound to the incoming cookie
+    const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
-  const { data, error } = await supabase.auth.getUser()
+    const { 
+      data: { user }, 
+      error 
+    } = await supabase.auth.getUser()
 
-  if (error) {
-    //if user is not logged in yet
-    console.log('Error fetching user in getUserFromCookie()', error)
-    return { user: null, error: error.message }
+    // If there's no user, or an error, return null + the error (if any)
+    if (!user || error) {
+      return {
+        user: null,
+        error: error ? error.message : null,
+      }
+    }
+
+    // If user exists and is validated, return the user
+    return {
+      user: user,
+      error: null,
+    }
+  } catch (error) {
+    console.error('Error in getUserFromCookie:', error)
+    return {
+      user: null,
+      error: error.message || 'Unknown auth error',
+    }
   }
-
-  return { user: data.user, error: null }
 }

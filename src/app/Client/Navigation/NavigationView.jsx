@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import Logo from '@/images/WaterMark_Logo.png'
+import Logo from '@/images/White_Logo.png'
 import { Languages } from 'lucide-react'
 import {useSidebar} from '@/components/ui/sidebar'
+import { useLogout } from '@/hooks/useLogout'
 import {
   Sidebar,
   SidebarContent,
@@ -38,10 +39,13 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import NavigationLogic from '@/app/Client/Navigation/NavigationLogic'
+import NavigationLogic from './NavigationLogic'
 import { useTranslation } from '@/utils/translations'
+import AccessOutBridgeUI from "@/components/custom/AccessOutBridgeUI";
+
 
 const NavigationContent = ({children}) => {
+  const { logout, isLoggingOut } = useLogout()
   const { translate, currentLanguage } = useTranslation()
   const { 
     navigationItems, 
@@ -67,10 +71,6 @@ const NavigationContent = ({children}) => {
     console.log('Searching for:', searchQuery)
   }
 
-  const handleLogout = () => {
-    const logoutItem = dropdownItems.find(item => item.title === 'Logout')
-    logoutItem?.onClick?.()
-  }
 
   return (
     <div className="flex w-screen min-h-screen bg-white">
@@ -178,7 +178,7 @@ const NavigationContent = ({children}) => {
           {!authInitialized ? (
             <Skeleton className="w-6 h-6 mr-3 rounded" />
           ):(
-               <SidebarTrigger className="mr-3 text-white rounded  hover:bg-white/10 hover:text-white" />
+               <SidebarTrigger className="mr-3 text-white rounded hover:bg-white/10 hover:text-white" />
             )}
             <Breadcrumb className="text-white">
               <BreadcrumbList>
@@ -294,7 +294,7 @@ const NavigationContent = ({children}) => {
                         {dropdownItems.map(item => (
                           <DropdownMenuItem 
                             key={item.title} 
-                            onClick={item.title === 'Logout' ? handleLogout : undefined}
+                            onClick={item.title === 'Logout' ? logout : undefined}
                             className={item.title === 'Logout' ? 'text-red-500' : ''}
                           >
                             <item.icon className="w-4 h-4 mr-2" />
@@ -310,22 +310,27 @@ const NavigationContent = ({children}) => {
           </div>
         </header>
 
-        <div className="flex-1 mt-12 overflow-auto">
+        <div className="relative flex-1 mt-12 overflow-auto">
           {children}
+          {isLoggingOut && (
+            <div className="absolute inset-0 z-50">
+              <AccessOutBridgeUI />
+            </div>
+          )}
         </div>
       </main>
     </div>
   )
 }
 
-const NavigationView = ({ children }) => {
-  const { currentLanguage } = useTranslation()
-  
+export default function NavigationView({ children }) {
+    const { currentLanguage } = useTranslation()
+
   return (
     <SidebarProvider key={currentLanguage}>
-      <NavigationContent>{children}</NavigationContent>
+      <NavigationContent>
+         {children}
+      </NavigationContent>
     </SidebarProvider>
   )
 }
-
-export default NavigationView

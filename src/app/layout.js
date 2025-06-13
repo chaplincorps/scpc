@@ -10,26 +10,39 @@ import { Toaster } from 'react-hot-toast';
 })
  
  export default async function RootLayout({ children }) {
+     // 1) On the server, read the Supabase cookie once:
    const { user, error } = await getUserFromCookie()
 
    return (
-     <html lang="en" className={inter.variable}>
+     <html lang="en" className={inter.variable} suppressHydrationWarning>
        <head />
        <body>
-       <AuthProvider initialUser={user} initialError={error}>
-            <Toaster
-               toastOptions={{
-                  style: {
-                     background: '#000000',
-                     color: '#FFFFFF',
-                     fontFamily: 'sans-serif',
-                     fontSize: '12px',
-                  },
-                  duration: 5000,
-                  position: 'top-right',
-               }}
-            />
-            {children}
+         {/*
+          2) Pass the server‐side `initialUser` + `initialError` into AuthProvider.
+             AuthProvider (in /components/custom/AuthProvider.jsx) will:
+             - create a browser‐side Supabase client (that also reads the same cookie)
+             - in a useEffect: call supabase.auth.getSession() → fill Zustand
+             - wire up onAuthStateChange
+        */}
+         <AuthProvider initialUser={user} initialError={error}>
+               <Toaster
+                  toastOptions={{
+                     style: {
+                        background: '#000000',
+                        color: '#FFFFFF',
+                        fontFamily: 'sans-serif',
+                        fontSize: '12px',
+                     },
+                     duration: 5000,
+                     position: 'top-right',
+                  }}
+               />
+              {/*
+            3) We still need to “finish hydrating” on the client by
+               a) calling fetchUser() so that if the cookie changed between SSR and CSR, we pick it up
+               b) subscribing to any future onAuthStateChange events
+          */}
+          {children}
          </AuthProvider>
        </body>
      </html>

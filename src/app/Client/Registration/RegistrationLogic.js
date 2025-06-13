@@ -4,6 +4,9 @@ import { useState} from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import axios from 'axios'
+import { CLIENT_ENDPOINTS } from '@/config/apiEndpoints'
+import { toast } from "react-hot-toast"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Eye, EyeOff } from "lucide-react"
@@ -53,6 +56,7 @@ const formSchema = z
          {...register}
          onFocus={() => setIsFocused(true)}
          onBlur={() => setIsFocused(false)}
+         autoComplete={type === "password" ? "new-password" : "off"}
          className={`!h-12 !px-3 !pt-4 !rounded !focus:ring-0 !focus:outline-none !focus:ring-offset-0 
            ${
              errors
@@ -116,9 +120,11 @@ const formSchema = z
    )
  }
 
-const RegistrationLogic = () => {
+export default function RegistrationLogic() {
   const email = useRegistrationStore(s => s.email)
+  const applicationId = useRegistrationStore(s => s.applicationId)
   const setEmail = useRegistrationStore((s) => s.setEmail)
+  const setApplicationId = useRegistrationStore((s) => s.setApplicationId)
   const clearEmail = useRegistrationStore((s) => s.clearEmail)
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
@@ -126,14 +132,13 @@ const RegistrationLogic = () => {
   const [activeTab, setActiveTab] = useState("register")
   const [verificationToken, setVerificationToken] = useState("")
   const [copied, setCopied] = useState(false)
-  const [applicationId, setApplicationId] = useState("")
-
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+  const [isFacebookLoading, setIsFacebookLoading] = useState(false)
 
   // Focus states for floating labels
   const [isEmailFocused, setIsEmailFocused] = useState(false)
   const [isPasswordFocused, setIsPasswordFocused] = useState(false)
   const [isConfirmPasswordFocused, setIsConfirmPasswordFocused] = useState(false)
-
 
   const {
    register,
@@ -176,44 +181,79 @@ const RegistrationLogic = () => {
     // Check if form is ready to submit
   const isFormReadyToSubmit =
    isEmailValid && isPasswordValid && isConfirmPasswordValid && watchedTerms && !isLoading
-
+   
   const handleRegistration = async (data) => {
+    setIsLoading(true)
+    try {
+      const response = await axios.post(CLIENT_ENDPOINTS.AUTH.REGISTER.toLowerCase(), {
+        email: data.email,
+        password: data.password,
+        terms_of_service: data.termsOfService
+      })
+        if(response.status === 201){
+         setEmail(data.email)
+         setApplicationId(response.data.application_id)
+         reset()
+         setActiveTab("verification")
+         toast.success(response.data.message)
+      }
+    } 
+    catch (error) {
+      if (error.response) {
+        // Show the specific error message from the server
+        const errorMessage = error.response.data.error || error.response.data.message || "Registration failed. Please try again."
+        toast.error(errorMessage)
+        console.error('Registration error:', errorMessage)
+      } else if (error.request) {
+         toast.error("No response from server. Please check your connection.")
+         console.error('No response received:', error.request)
+      } else {
+         toast.error("An error occurred while setting up the request")
+         console.error('Request setup error:', error.message)
+      }
+    } 
+    finally {
+      setIsLoading(false)
+    }
+  }
+ const handleVerificationToken = async (value) => {
    setIsLoading(true)
    try {
-      setEmail(data.email)
-      reset()
-      setActiveTab("verification")
-   } 
-   catch (error) {
-
-   } 
-   finally {
-      setIsLoading(false)
-   }
- }
-
- const handleVerificationToken = (value) => {
-   setVerificationToken(value)
-   
-   // Automatically trigger verification when all 8 digits are entered
-   if (value.length === 8) {
-      setIsLoading(true)
-      try {
-         const generatedId = `APP${Math.random().toString(36).substr(2, 9).toUpperCase()}`
-         setApplicationId(generatedId)
-         // For now, just simulate success and move to next stage
-         setTimeout(() => {
+      setVerificationToken(value)      
+      if (value.length === 8) {
+         // Convert token to number before sending since database expects numeric type
+         const numericToken = Number(value)
+         const response = await axios.post(CLIENT_ENDPOINTS.AUTH.VERIFY_EMAIL.toLowerCase(), {
+            token: numericToken,
+            email,
+            application_id: applicationId
+         })
+         
+         if (response.status === 200) {
+            // Only move to next stage if verification was successful
             setActiveTab("complete")
             setVerificationToken("")
             clearEmail()
-         }, 1000)
-      } 
-      catch (error) {
-         console.error('Verification error:', error)
-      } 
-      finally {
-         setIsLoading(false)
+            toast.success(response.data.message)
+         }
       }
+   } catch (error) {
+      if (error.response) {
+         // Show the specific error message from the server
+         const errorMessage = error.response.data.error || error.response.data.message || "Email verification failed. Please try again."
+         toast.error(errorMessage)
+         console.error('Email verification error:', errorMessage)
+         // Clear the token input on error
+         setVerificationToken("")
+      } else if (error.request) {
+         toast.error("No response from server. Please check your connection.")
+         console.error('No response received:', error.request)
+      } else {
+         toast.error("An error occurred while setting up the request")
+         console.error('Request setup error:', error.message)
+      }
+   } finally {
+      setIsLoading(false)
    }
  }
  
@@ -225,6 +265,47 @@ const copyToClipboard = async () => {
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
       toast.error("Failed to copy: ", err)
+    }
+  }
+
+  const handleGoogleSignIn = async () => {
+    try {
+      setIsGoogleLoading(true)
+      
+      // Call our API endpoint to initiate Google OAuth
+      const response = await axios.post(CLIENT_ENDPOINTS.AUTH.GOOGLE)
+      
+      if (response.data?.url) {
+        // Redirect to Google's OAuth page
+        window.location.href = response.data.url
+      } else {
+        toast.error('Failed to initialize Google sign in')
+      }
+    } 
+    catch (error) {
+      console.error('Google sign in error:', error)
+      toast.error(error.response?.data?.error || 'Failed to initialize Google sign in')
+      setIsGoogleLoading(false)
+    }
+  }
+
+  const handleFacebookSignIn = async () => {
+    try {
+      setIsFacebookLoading(true)
+      
+      // Call our API endpoint to initiate Facebook OAuth
+      const response = await axios.post(CLIENT_ENDPOINTS.AUTH.FACEBOOK)
+      
+      if (response.data?.url) {
+        // Redirect to Facebook's OAuth page
+        window.location.href = response.data.url
+      } else {
+        toast.error('Failed to initialize Facebook sign in')
+      }
+    } catch (error) {
+      console.error('Facebook sign in error:', error)
+      toast.error(error.response?.data?.error || 'Failed to initialize Facebook sign in')
+      setIsFacebookLoading(false)
     }
   }
 
@@ -262,8 +343,10 @@ const copyToClipboard = async () => {
       handleVerificationToken,
       copied,
       applicationId,
-      copyToClipboard
+      copyToClipboard,
+      handleGoogleSignIn,
+      isGoogleLoading,
+      handleFacebookSignIn,
+      isFacebookLoading
    }
 }
-
-export default RegistrationLogic;

@@ -11,7 +11,8 @@
       "@custom/*": ["src/components/custom/*"],
       "@lib/*": ["src/lib/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@store/*": ["src/store/*"]
+      "@store/*": ["src/store/*"],
+      "@emails/*":["src/emails/*"],
     }
   },
   "include": ["src"]    

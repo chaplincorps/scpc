@@ -223,7 +223,7 @@ export default function RegistrationLogic() {
       if (value.length === 8) {
          // Convert token to number before sending since database expects numeric type
          const numericToken = Number(value)
-         const response = await axios.post(CLIENT_ENDPOINTS.AUTH.VERIFY_EMAIL.toLowerCase(), {
+         const response = await axios.post(CLIENT_ENDPOINTS.AUTH.VERIFY_EMAIL_AUTO.toLowerCase(), {
             token: numericToken,
             email,
             application_id: applicationId

@@ -4,7 +4,8 @@ export const CLIENT_ENDPOINTS = {
   AUTH: {
     LOGIN: `${BASE_URL}/login`,
     REGISTER: `${BASE_URL}/registration`,
-    VERIFY_EMAIL: `${BASE_URL}/verify-email`,
+    VERIFY_EMAIL_AUTO: `${BASE_URL}/verify-email(auto)`,
+    VERIFY_EMAIL_MANUAL: `${BASE_URL}/verify-email(manual)`,
     RESEND_TOKEN: `${BASE_URL}/resend-token`,
     GOOGLE: `${BASE_URL}/google`,
     FACEBOOK: `${BASE_URL}/facebook`

@@ -4,10 +4,10 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 
-export default function VerifyEmailSkelton(){
-     return (
+export default function ResetPasswordSkeleton(){
+      return (
       <div className="flex min-h-[calc(100vh-49px)] lg:flex-row">
-          <div className="w-full lg:w-[50%] bg-white flex items-center justify-center p-2">
+         <div className="w-full lg:w-[50%] bg-white flex items-center justify-center p-2">
             <Card className="w-full p-2 bg-[#006699]">
                <CardHeader className="space-y-1">
                   <Skeleton className="w-48 h-8 mx-auto" />
@@ -16,11 +16,14 @@ export default function VerifyEmailSkelton(){
 
                {/* Tabs Skeleton */}
                <Tabs defaultValue="register" className="w-full">
-                  <TabsList className="grid w-full h-10 grid-cols-2 justify-between rounded bg-[#006699]/60 -mb-5">
+                  <TabsList className="grid w-full h-10 grid-cols-3 justify-between rounded bg-[#006699]/60 -mb-5">
                      <TabsTrigger value="register" className="data-[state=active]:bg-[#006699] data-[state=active]:shadow-none rounded text-white">
                         <Skeleton className="w-16 h-4" />
                      </TabsTrigger>
                      <TabsTrigger value="verification" className="data-[state=active]:bg-[#006699] data-[state=active]:shadow-none rounded text-white">
+                        <Skeleton className="w-16 h-4" />
+                     </TabsTrigger>
+                     <TabsTrigger value="complete" className="data-[state=active]:bg-[#006699] data-[state=active]:shadow-none rounded text-white">
                         <Skeleton className="w-16 h-4" />
                      </TabsTrigger>
                   </TabsList>

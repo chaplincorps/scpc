@@ -120,7 +120,7 @@ export async function POST(req) {
       { status: 200 }
     )
   } catch (err) {
-    console.error('Unexpected error in verify‐token route:', err)
+    console.error('Unexpected error in auto verify‐token route:', err)
     return NextResponse.json({ error: 'An unexpected error occurred.' }, { status: 500 })
   }
 }

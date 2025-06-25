@@ -23,25 +23,15 @@ function generateToken() {
 }
 
 export async function POST(req) {
-  const { email, application_id } = await req.json()
-
+  const { email } = await req.json()
   // 1) Basic payload validation
   if (!email || typeof email !== 'string') {
     return NextResponse.json({ error: 'Email is required.' }, { status: 400 })
   }
 
-  if (!application_id || typeof application_id !== 'string') {
-    return NextResponse.json({ error: 'Application ID is required.' }, { status: 400 })
-  }
-
   // 2) Validate email format using validator
   if (!validator.isEmail(email)) {
     return NextResponse.json({ error: 'Invalid email format.' }, { status: 400 })
-  }
-
-  // 3) Validate application ID format (SCPC followed by 6 digits)
-  if (!/^SCPC\d{6}$/.test(application_id)) {
-    return NextResponse.json({ error: 'Invalid application ID format.' }, { status: 400 })
   }
 
   // 4) Normalize email (trim whitespace and convert to lowercase)
@@ -51,9 +41,8 @@ export async function POST(req) {
     // 5) Check if email and application_id match in database
     const { data: user, error: fetchError } = await supabaseAdmin
       .from('user_registration')
-      .select('id, email_verified, application_id')
+      .select('id, email_verified')
       .eq('email', normalizedEmail)
-      .eq('application_id', application_id)
       .single()
 
     if (fetchError) {
@@ -64,17 +53,12 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Internal server error.' }, { status: 500 })
     }
 
-    // 6) Check if email is already verified
-    if (user.email_verified === true) {
-      return NextResponse.json({ error: 'Email is already verified.' }, { status: 400 })
-    }
-
-    // 7) Generate new token and set expiration to 3 minutes from now
+    // 6) Generate new token and set expiration to 3 minutes from now
     const token = generateToken()
     const tokenExpiresAt = new Date()
     tokenExpiresAt.setMinutes(tokenExpiresAt.getMinutes() + 3)
 
-    // 8) Update the user's token in database
+    // 7) Update the user's token in database
     const { error: updateError } = await supabaseAdmin
       .from('user_registration')
       .update({
@@ -88,7 +72,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Failed to update verification token.' }, { status: 500 })
     }
 
-    // 9) Send the new token email
+    // 8) Send the new token email
     try {
       await sendResendTokenEmail({
         to: normalizedEmail,
@@ -99,11 +83,10 @@ export async function POST(req) {
       // Don't fail the request if email fails
     }
 
-    // 10) Return success response
+    // 9) Return success response
     return NextResponse.json(
       { 
         message: 'New verification token sent successfully.',
-        application_id: user.application_id
       },
       { status: 200 }
     )

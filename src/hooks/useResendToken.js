@@ -2,16 +2,20 @@
 
 import { useState, useEffect } from "react"
 import toast from "react-hot-toast"
-import { useRegistrationStore } from "@/store/registrationStore"
+import { useRegistrationStore } from '@/store/registrationStore'
+import { useVerifyEmailStore } from '@/store/verifyEmailStore'
+import { usePasswordResetStore } from '@/store/passwordResetStore'
 import axios from 'axios'
 import { CLIENT_ENDPOINTS } from '@/config/apiEndpoints'
 
 export default function useResendToken() {
-     const [countdown, setCountdown] = useState(0);
+   const [countdown, setCountdown] = useState(0);
    const [isResendLoading, setIsResendLoading] = useState(false)
    const [isResendDisabled, setIsResendDisabled] = useState(false);
-   const email = useRegistrationStore((s) => s.email)
-   const applicationId = useRegistrationStore((s) => s.applicationId)
+   const registrationEmail = useRegistrationStore((state) => state.email)
+   const verifyEmail = useVerifyEmailStore((state) => state.email)
+   const passwordResetEmail = usePasswordResetStore((state) => state.email)
+   const email = registrationEmail || verifyEmail || passwordResetEmail
 
    useEffect(() => {
       let timer;
@@ -28,9 +32,8 @@ export default function useResendToken() {
    const handleResendToken = async () => {
       setIsResendLoading(true)
       try {
-         const response = await axios.post(CLIENT_ENDPOINTS.AUTH.RESEND_TOKEN.toLowerCase(), {
+         const response = await axios.post(CLIENT_ENDPOINTS.AUTH.RESEND_TOKEN, {
             email,
-            application_id: applicationId
          });
 
          if (response.status === 200) {

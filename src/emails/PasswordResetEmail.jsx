@@ -12,7 +12,7 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
-export const ResendTokenEmail = ({
+export const PasswordResetEmail = ({
   verificationToken,
 }) => {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
@@ -20,7 +20,7 @@ export const ResendTokenEmail = ({
   return (
     <Html>
       <Head />
-      <Preview>New Verification Token - Expires in 3 Minutes</Preview>
+      <Preview>SCPC - Password Reset Request</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -30,26 +30,25 @@ export const ResendTokenEmail = ({
             alt="SCPC Logo"
             style={logo}
           />
-          <Heading style={h1}>New Verification Token</Heading>
+          <Heading style={h1}>Password Reset</Heading>
           
           <Section style={section}>
             <Text style={text}>
-              You have requested a new verification token. Please use the token below.
+               You have requested to reset your password with SCPC. Please use the following verification token:
             </Text>
-            
-            <Section style={tokenSection}>
-              <Text style={tokenLabel}>Your Verification Token</Text>
-              <Text style={tokenValue}>{verificationToken}</Text>
-              <Text style={expirationText}>
-                This token will expire in 3 minutes
-              </Text>
-            </Section>
+
+                  <Section style={tokenSection}>
+                     <Text style={tokenLabel}>Your Verification Token</Text>
+                     <Text style={tokenValue}>{verificationToken}</Text>
+                     <Text style={expirationText}>
+                        This token will expire in 5 minutes
+                     </Text>
+                  </Section>
           </Section>
 
           <Section style={footer}>
             <Text style={disclaimerText}>
-             If you did not request this verification token, please ignore this email.
-            </Text>
+               If you did not request this password reset, please ignore this email.            </Text>
             <Text style={footerText}>
               © {new Date().getFullYear()} SCPC. All rights reserved.
             </Text>
@@ -69,7 +68,8 @@ export const ResendTokenEmail = ({
 // Styles
 const main = {
   backgroundColor: '#f6f9fc',
-  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Ubuntu, sans-serif',
+  fontFamily:
+    '-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Ubuntu,sans-serif',
 };
 
 const container = {
@@ -77,8 +77,6 @@ const container = {
   margin: '0 auto',
   padding: '20px 0 48px',
   marginBottom: '64px',
-  borderRadius: '8px',
-  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
 };
 
 const logo = {
@@ -86,24 +84,24 @@ const logo = {
   marginBottom: '15px',
 };
 
-const h1 = {
-  color: '#006699',
-  fontSize: '24px',
-  fontWeight: 'bold',
-  margin: '40px 0',
-  padding: '0',
-  textAlign: 'center',
-};
-
 const section = {
   padding: '0 48px',
 };
 
+const h1 = {
+  color: '#006699',
+  fontSize: '24px',
+  fontWeight: '600',
+  lineHeight: '1.3',
+  padding: '17px 0 0',
+  textAlign: 'center',
+};
+
 const text = {
-  color: '#333333',
+  color: '#1a1a1a',
   fontSize: '16px',
   lineHeight: '24px',
-  margin: '16px 0',
+  textAlign: 'left',
 };
 
 const tokenSection = {
@@ -131,7 +129,7 @@ const tokenValue = {
 };
 
 const expirationText = {
-   color: '#ffffff',
+  color: '#ffffff',
   fontSize: '14px',
   lineHeight: '20px',
   textAlign: 'center',
@@ -173,4 +171,5 @@ const link = {
   textDecoration: 'underline',
 };
 
-export default ResendTokenEmail; 
+
+export default PasswordResetEmail; 

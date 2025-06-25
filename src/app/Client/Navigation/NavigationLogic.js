@@ -59,11 +59,11 @@ export default function NavigationLogic() {
    }
  
    const publicNavigationItems = useMemo(() => [
-     { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding',   id:'dashboard',       isActive: pathname === '/Client/Onboarding' },
-     { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/Client/Login',        id:'login',           isActive: pathname === '/Client/Login' },
-     { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/Client/Registration', id:'register',        isActive: pathname === '/Client/Registration' },
-     { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/Client/Verify-Email', id:'verify-email',    isActive: pathname === '/Client/Verify-Email' },
-     { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/reset-password',    id:'reset-password',  isActive: pathname === '/reset-password' },
+     { title: translate('navigation.onboarding'),      icon: Compass,           url: '/Client/Onboarding',    id:'dashboard',       isActive: pathname === '/Client/Onboarding'},
+     { title: translate('navigation.login'),           icon: UserRoundCheck,    url: '/Client/Login',         id:'login',           isActive: pathname === '/Client/Login' },
+     { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/Client/Registration',  id:'register',        isActive: pathname === '/Client/Registration'},
+     { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/Client/Verify-Email',  id:'verify-email',    isActive: pathname === '/Client/Verify-Email'},
+     { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/Client/Reset-Password',id:'reset-password',  isActive: pathname === '/Client/Reset-Password'},
      { title: translate('navigation.gallery'),         icon: Image,             url: '/gallery',           id:'gallery',         isActive: pathname === '/gallery' },
      { title: translate('navigation.events'),          icon: Calendar,          url: '/events',            id:'events',          isActive: pathname === '/events' },
      { title: translate('navigation.about'),           icon: Library,           url: '/about',             id:'about',           isActive: pathname === '/about' },

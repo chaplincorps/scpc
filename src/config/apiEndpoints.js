@@ -8,7 +8,8 @@ export const CLIENT_ENDPOINTS = {
     VERIFY_EMAIL_MANUAL: `${BASE_URL}/verify-email(manual)`,
     RESEND_TOKEN: `${BASE_URL}/resend-token`,
     GOOGLE: `${BASE_URL}/google`,
-    FACEBOOK: `${BASE_URL}/facebook`
+    FACEBOOK: `${BASE_URL}/facebook`,
+    PASSWORD_RESET: `${BASE_URL}/password-reset`,
   },
   DASHBOARD: `${BASE_URL}/dashboard`,
 }

@@ -37,6 +37,20 @@ export async function POST(req){
             )
          }
 
+         if (!email || typeof email !== 'string'){
+         return NextResponse.json(
+            {error: 'Email is required'},
+            { status: 400 }
+         )
+         }
+
+         if (!validator.isEmail(email)){
+         return NextResponse.json(
+            { error: 'Invalid email format' },
+            { status: 400 }
+         )
+         }
+
          if (data.email_verified) {
             return NextResponse.json(
                { error: 'Email is already verified.' },

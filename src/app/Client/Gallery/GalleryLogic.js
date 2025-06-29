@@ -119,17 +119,33 @@ function SkeletonCard(){
 function GalleryCard({ item, onClick }) {
   const [shared, setShared] = useState(false);
 
-  const handleShare = async (e) => {
-    e.stopPropagation();
+     const handleShare = async (e) => {
+    e.stopPropagation()
+    const shareUrl = `${window.location.origin}/Images/${item.id}`
+
     try {
-      // Copy the image URL to clipboard
-      await navigator.clipboard.writeText(item.fullImage.src);      
-      setShared(true);
-      setTimeout(() => setShared(false), 2000);
+      if (navigator.share) {
+        await navigator.share({
+          title: event.name,
+          text: `Check out this image: ${event.name}`,
+          url: shareUrl,
+        })
+      } else {
+        await navigator.clipboard.writeText(shareUrl)
+        setShared(true)
+        setTimeout(() => setShared(false), 2000)
+      }
     } catch (error) {
-      console.error("Error copying image URL:", error);
+      // Fallback to clipboard
+      try {
+        await navigator.clipboard.writeText(shareUrl)
+        setShared(true)
+        setTimeout(() => setShared(false), 2000)
+      } catch (clipboardError) {
+        console.error("Failed to share or copy link:", clipboardError)
+      }
     }
-  };
+  }
 
   return (
     <div
@@ -174,13 +190,13 @@ function GalleryCard({ item, onClick }) {
 // Empty State Component
 function EmptyState() {
   return (
-    <div className="flex items-center justify-center min-h-[60vh]">
+    <div className="flex items-center justify-center w-full min-h-[calc(90vh-49px)]">
       <div className="text-center">
-        <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-[#006699]/10 flex items-center justify-center">
-          <ImageIcon className="w-12 h-12 text-[#006699]" />
+        <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-[#006699] flex items-center justify-center">
+          <ImageIcon className="w-12 h-12 text-white" />
         </div>
         <h2 className="text-2xl font-semibold text-[#006699] mb-2">No gallery yet</h2>
-        <p className="text-lg text-gray-600">No events have been added to the gallery yet</p>
+        <p className="text-lg text-gray-600">No image have been added yet</p>
       </div>
     </div>
   )
@@ -275,7 +291,8 @@ export default function GalleryLogic(){
   // Simulate loading
   useEffect(() => {
     const timer = setTimeout(() => {
-      setGalleryItems(mockGalleryItems) // Change to [] to see empty state
+      // Change setGalleryItems(mockGalleryItems) to setGalleryItems([]) to see empty state
+      setGalleryItems([]) 
       setIsLoading(false)
     }, 2000)
 

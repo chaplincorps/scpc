@@ -1,0 +1,203 @@
+
+[
+  {
+    "id": "1",
+    "name": "Joint Field Training Exercise (FTX) 2025",
+    "image": "/Placeholder.png",
+    "date": "June 30, 2025",
+    "time": "10:00 AM – 2:00 PM",
+    "stateCommand": "Lagos Command",
+    "location": "Victoria Island Training Grounds, Lagos",
+    "description": "Participate in a comprehensive field training exercise designed to enhance operational readiness and inter-agency coordination. The FTX will include simulated disaster response, search and rescue drills, and tactical communication workshops.\n\nAll units are required to report in full gear. The exercise will be conducted in collaboration with local NGOs specializing in humanitarian relief and emergency logistics.\n\nDebriefing and after-action review will follow. Meals and hydration stations provided. Attendance is mandatory for all command personnel."
+  },
+  {
+    "id": "2",
+    "name": "Humanitarian Technology & Security Summit",
+    "image": "/Placeholder.png",
+    "date": "July 15, 2025",
+    "time": "9:00 AM – 6:00 PM",
+    "stateCommand": "Abuja Command",
+    "location": "International Conference Centre, Abuja",
+    "description": "Join security forces, NGO leaders, and technology experts to explore innovations in humanitarian response and field security. Sessions include crisis mapping, secure communications, and rapid deployment logistics.\n\nKeynotes from international peacekeeping advisors and NGO directors. Workshops on drone surveillance, emergency medical tech, and data protection in conflict zones.\n\nAll participants receive operational handbooks and access to the secure resource portal. Lunch and networking included."
+  },
+  {
+    "id": "3",
+    "name": "Civil-Military Relations Awareness Night",
+    "image": "/Placeholder.png",
+    "date": "August 5, 2025",
+    "time": "7:00 PM – 10:00 PM",
+    "stateCommand": "Rivers Command",
+    "location": "Cultural Arts Center, Port Harcourt",
+    "description": "An evening dedicated to strengthening civil-military cooperation. Engage with local leaders, NGO representatives, and security personnel. The event features a photo exhibition on peacekeeping missions, panel discussions, and networking opportunities.\n\nRefreshments provided. Open to all community stakeholders."
+  },
+  {
+    "id": "4",
+    "name": "Field Medical Training Workshop",
+    "image": "/Placeholder.png",
+    "date": "August 20, 2025",
+    "time": "2:00 PM – 5:00 PM",
+    "stateCommand": "Kano Command",
+    "location": "Kano Command Medical Facility, Kano",
+    "description": "Hands-on training in emergency field medicine for paramilitary and NGO responders. Topics include trauma care, triage, and casualty evacuation.\n\nLed by experienced field medics and humanitarian health workers. All supplies provided. Certificate awarded upon completion."
+  },
+  {
+    "id": "5",
+    "name": "Disaster Response Fitness Challenge",
+    "image": "/Placeholder.png",
+    "date": "September 10, 2025",
+    "time": "8:00 AM – 11:00 AM",
+    "stateCommand": "Ogun Command",
+    "location": "Central Park, Abeokuta",
+    "description": "A 5K fitness challenge simulating disaster response scenarios. Open to all paramilitary units, volunteers, and NGO staff. Obstacles include casualty carries, equipment transport, and rapid shelter setup.\n\nParticipants receive a commemorative patch and certificate. Proceeds support local emergency preparedness programs. Family-friendly activities and first aid demonstrations at the finish area."
+  },
+  {
+    "id": "6",
+    "name": "Logistics & Supply Chain Briefing",
+    "image": "/Placeholder.png",
+    "date": "September 25, 2025",
+    "time": "6:30 PM – 9:30 PM",
+    "stateCommand": "Kaduna Command",
+    "location": "Kaduna Command HQ, Kaduna",
+    "description": "A strategic briefing on humanitarian logistics and supply chain management. Topics include convoy planning, resource allocation, and secure distribution in crisis zones.\n\nInteractive Q&A with logistics officers and NGO supply coordinators. Light refreshments provided. Open to all logistics and operations staff."
+  },
+  {
+    "id": "7",
+    "name": "Field Documentation & Reporting Workshop",
+    "image": "/Placeholder.png",
+    "date": "October 12, 2025",
+    "time": "1:00 PM – 5:00 PM",
+    "stateCommand": "Plateau Command",
+    "location": "Jos Command Center, Jos",
+    "description": "Training on field documentation, incident reporting, and evidence collection for paramilitary and NGO field teams. Includes practical exercises in photography, note-taking, and secure data transmission."
+  },
+  {
+    "id": "8",
+    "name": "Inter-Agency Coordination Forum",
+    "image": "/Placeholder.png",
+    "date": "October 28, 2025",
+    "time": "6:00 PM – 9:00 PM",
+    "stateCommand": "Delta Command",
+    "location": "Warri Command Operations Center, Warri",
+    "description": "A networking and strategy session for paramilitary, NGO, and government agency representatives. Focus on best practices for joint operations, resource sharing, and crisis response coordination.\n\nIncludes panel discussions, scenario planning, and a collaborative action plan workshop. All attendees receive a coordination toolkit and access to the secure communications platform."
+  },
+  {
+    "id": "9",
+    "name": "Rapid Response Team Mobilization Drill",
+    "image": "/Placeholder.png",
+    "date": "November 5, 2025",
+    "time": "8:00 AM – 12:00 PM",
+    "stateCommand": "Enugu Command",
+    "location": "Enugu Emergency Operations Base, Enugu",
+    "description": "A full-scale mobilization drill for rapid response teams. Includes vehicle convoy operations, emergency shelter setup, and live communication exercises. All units must be prepared for immediate deployment."
+  },
+  {
+    "id": "10",
+    "name": "Community Risk Assessment Workshop",
+    "image": "/Placeholder.png",
+    "date": "November 18, 2025",
+    "time": "10:00 AM – 3:00 PM",
+    "stateCommand": "Ekiti Command",
+    "location": "Ado-Ekiti Civic Center, Ado-Ekiti",
+    "description": "Interactive workshop on conducting risk assessments in vulnerable communities. Focus on hazard mapping, vulnerability analysis, and community engagement. Led by NGO risk management specialists."
+  },
+  {
+    "id": "11",
+    "name": "Search & Rescue (SAR) Simulation",
+    "image": "/Placeholder.png",
+    "date": "December 2, 2025",
+    "time": "7:00 AM – 1:00 PM",
+    "stateCommand": "Cross River Command",
+    "location": "Calabar SAR Training Grounds, Calabar",
+    "description": "Simulated search and rescue operation in a challenging terrain. Teams will practice victim location, extraction, and first aid under time constraints. Open to all SAR-certified personnel and NGO partners."
+  },
+  {
+    "id": "12",
+    "name": "Humanitarian Law & Ethics Seminar",
+    "image": "/Placeholder.png",
+    "date": "December 15, 2025",
+    "time": "9:00 AM – 1:00 PM",
+    "stateCommand": "Osun Command",
+    "location": "Osogbo Legal Resource Center, Osogbo",
+    "description": "Seminar on international humanitarian law, ethics in field operations, and protection of civilians. Includes case studies and group discussions. Recommended for all field officers and NGO staff."
+  },
+  {
+    "id": "13",
+    "name": "Water Purification & Hygiene Training",
+    "image": "/Placeholder.png",
+    "date": "January 10, 2026",
+    "time": "11:00 AM – 2:00 PM",
+    "stateCommand": "Benue Command",
+    "location": "Makurdi Command Water Facility, Makurdi",
+    "description": "Hands-on training in water purification, sanitation, and hygiene promotion for field teams. Demonstrations of portable filtration systems and hygiene kit distribution."
+  },
+  {
+    "id": "14",
+    "name": "Field Communications Bootcamp",
+    "image": "/Placeholder.png",
+    "date": "January 24, 2026",
+    "time": "8:00 AM – 4:00 PM",
+    "stateCommand": "Anambra Command",
+    "location": "Onitsha Communications Hub, Onitsha",
+    "description": "Intensive bootcamp on radio operations, satellite phones, and secure messaging for field deployments. Includes troubleshooting and emergency protocol drills."
+  },
+  {
+    "id": "15",
+    "name": "Women in Humanitarian Leadership Forum",
+    "image": "/Placeholder.png",
+    "date": "February 6, 2026",
+    "time": "10:00 AM – 2:00 PM",
+    "stateCommand": "Edo Command",
+    "location": "Benin City Leadership Center, Benin City",
+    "description": "Forum celebrating women leaders in paramilitary and NGO sectors. Panel discussions, mentorship sessions, and leadership development workshops. Open to all genders."
+  },
+  {
+    "id": "16",
+    "name": "Mass Casualty Incident Drill",
+    "image": "/Placeholder.png",
+    "date": "February 20, 2026",
+    "time": "7:00 AM – 12:00 PM",
+    "stateCommand": "Borno Command",
+    "location": "Maiduguri Emergency Response Field, Maiduguri",
+    "description": "Large-scale simulation of a mass casualty incident. Focus on triage, field hospital setup, and coordination with medical NGOs. All medical and logistics staff required."
+  },
+  {
+    "id": "17",
+    "name": "Child Protection & Safeguarding Workshop",
+    "image": "/Placeholder.png",
+    "date": "March 5, 2026",
+    "time": "9:00 AM – 1:00 PM",
+    "stateCommand": "Imo Command",
+    "location": "Owerri Child Advocacy Center, Owerri",
+    "description": "Workshop on child protection protocols, safeguarding policies, and psychosocial support in emergencies. Led by child welfare NGOs and field psychologists."
+  },
+  {
+    "id": "18",
+    "name": "Environmental Hazards Response Seminar",
+    "image": "/Placeholder.png",
+    "date": "March 18, 2026",
+    "time": "10:00 AM – 3:00 PM",
+    "stateCommand": "Bayelsa Command",
+    "location": "Yenagoa Environmental Center, Yenagoa",
+    "description": "Seminar on responding to environmental hazards such as floods, oil spills, and wildfires. Includes scenario planning and resource mobilization exercises."
+  },
+  {
+    "id": "19",
+    "name": "Volunteer Recruitment & Orientation Day",
+    "image": "/Placeholder.png",
+    "date": "April 2, 2026",
+    "time": "9:00 AM – 12:00 PM",
+    "stateCommand": "Katsina Command",
+    "location": "Katsina Command HQ, Katsina",
+    "description": "Orientation for new volunteers joining paramilitary and NGO operations. Overview of field protocols, safety briefings, and team-building activities."
+  },
+  {
+    "id": "20",
+    "name": "Mobile Health Clinic Deployment",
+    "image": "/Placeholder.png",
+    "date": "April 15, 2026",
+    "time": "8:00 AM – 2:00 PM",
+    "stateCommand": "Taraba Command",
+    "location": "Jalingo Mobile Clinic Base, Jalingo",
+    "description": "Deployment of mobile health clinics to underserved communities. Services include vaccinations, health screenings, and health education. Supported by medical NGOs and local health authorities."
+  }
+]

@@ -64,12 +64,12 @@ export default function NavigationLogic() {
      { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/Client/Registration',  id:'register',        isActive: pathname === '/Client/Registration'},
      { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/Client/Verify-Email',  id:'verify-email',    isActive: pathname === '/Client/Verify-Email'},
      { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/Client/Reset-Password',id:'reset-password',  isActive: pathname === '/Client/Reset-Password'},
-     { title: translate('navigation.gallery'),         icon: Image,             url: '/gallery',           id:'gallery',         isActive: pathname === '/gallery' },
-     { title: translate('navigation.events'),          icon: Calendar,          url: '/events',            id:'events',          isActive: pathname === '/events' },
-     { title: translate('navigation.about'),           icon: Library,           url: '/about',             id:'about',           isActive: pathname === '/about' },
-     { title: translate('navigation.support'),         icon: Headset,           url: '/support',           id:'support',         isActive: pathname === '/support' },
-     { title: translate('navigation.terms'),           icon: Handshake,         url: '/terms',             id:'terms',           isActive: pathname === '/terms' },
-     { title: translate('navigation.policy'),          icon: GlobeLock,         url: '/policy',            id:'policy',          isActive: pathname === '/policy' },
+     { title: translate('navigation.gallery'),         icon: Image,             url: '/Client/Gallery',       id:'gallery',         isActive: pathname === '/Client/Gallery' },
+     { title: translate('navigation.events'),          icon: Calendar,          url: '/Client/Events',        id:'events',          isActive: pathname === '/Client/Events' },
+     { title: translate('navigation.about'),           icon: Library,           url: '/Client/About',         id:'about',           isActive: pathname === '/Client/About' },
+     { title: translate('navigation.support'),         icon: Headset,           url: '/Client/Support',       id:'support',         isActive: pathname === '/Client/Support' },
+     { title: translate('navigation.terms'),           icon: Handshake,         url: '/Client/Terms',         id:'terms',           isActive: pathname === '/Client/Terms' },
+     { title: translate('navigation.policy'),          icon: GlobeLock,         url: '/Client/Policy',        id:'policy',          isActive: pathname === '/Client/Policy' },
    ], [pathname, translate, currentLanguage])
  
    const authenticatedNavigationItems = useMemo(() => [

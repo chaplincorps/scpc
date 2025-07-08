@@ -12,6 +12,9 @@ export const CLIENT_ENDPOINTS = {
     PASSWORD_RESET: `${BASE_URL}/password-reset`,
   },
   DASHBOARD: `${BASE_URL}/dashboard`,
+  SUPPORT:{
+      OFFLINE_SUPPORT: `${BASE_URL}/offline-support`
+  }
 }
 
 export default CLIENT_ENDPOINTS

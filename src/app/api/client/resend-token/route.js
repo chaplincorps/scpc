@@ -22,8 +22,8 @@ function generateToken() {
   return array[0].toString().padStart(8, '0').slice(0, 8)
 }
 
-export async function POST(req) {
-  const { email } = await req.json()
+export async function POST(request) {
+  const { email } = await request.json()
   // 1) Basic payload validation
   if (!email || typeof email !== 'string') {
     return NextResponse.json({ error: 'Email is required.' }, { status: 400 })

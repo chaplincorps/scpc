@@ -78,6 +78,8 @@ export default function NavigationLogic() {
      { title: translate('navigation.cbtResults'),      icon: Scroll,            url: '/client/cbt-results',id:'/cbt-results',   isActive: pathname === '/client/cbt-results' },
      { title: translate('navigation.applicationForm'), icon: FileText,         url: '/client/application',id:'application',   isActive: pathname === '/client/application' },
      { title: translate('navigation.learn'), icon: School,         url: '/client/learn', id:'learn',   isActive: pathname === '/client/learn' },
+     { title: translate('navigation.support'),         icon: Headset,           url: '/Client/Support',       id:'support-auth',         isActive: pathname === '/Client/Support' },
+
    ], [pathname, translate, currentLanguage])
  
    const dropdownItems = useMemo(() => [

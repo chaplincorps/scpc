@@ -66,7 +66,7 @@ export default function NavigationLogic() {
      { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/Client/Registration',  id:'register',        isActive: pathname === '/Client/Registration'},
      { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/Client/Verify-Email',  id:'verify-email',    isActive: pathname === '/Client/Verify-Email'},
      { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/Client/Reset-Password',id:'reset-password',  isActive: pathname === '/Client/Reset-Password'},
-     { title: translate('navigation.department'),      icon: Layers,            url: '/Client/Department',    id:'Department',      isActive: pathname === '/Client/Department'},
+     { title: translate('navigation.department'),      icon: Layers,            url: '/Client/Departments',    id:'Department',      isActive: pathname === '/Client/Departments'},
      { title: translate('navigation.ethics'),          icon: Gavel ,            url: '/Client/Ethics',    id:'ethics',              isActive: pathname === '/Client/Ethics'},
      { title: translate('navigation.gallery'),         icon: Image,             url: '/Client/Gallery',       id:'gallery',         isActive: pathname === '/Client/Gallery' },
      { title: translate('navigation.events'),          icon: Calendar,          url: '/Client/Events',        id:'events',          isActive: pathname === '/Client/Events' },

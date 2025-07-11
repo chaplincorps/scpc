@@ -21,7 +21,9 @@ import {
   Library,
   Scroll,
   FileText,
-  School
+  School,
+  Layers,
+  Gavel,
 } from 'lucide-react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useAuthStore } from '@/store/authStore'
@@ -64,6 +66,8 @@ export default function NavigationLogic() {
      { title: translate('navigation.register'),        icon: UserRoundPlus,     url: '/Client/Registration',  id:'register',        isActive: pathname === '/Client/Registration'},
      { title: translate('navigation.verifyEmail'),     icon: MailCheck,         url: '/Client/Verify-Email',  id:'verify-email',    isActive: pathname === '/Client/Verify-Email'},
      { title: translate('navigation.resetPassword'),   icon: ShieldCheck,       url: '/Client/Reset-Password',id:'reset-password',  isActive: pathname === '/Client/Reset-Password'},
+     { title: translate('navigation.department'),      icon: Layers,            url: '/Client/Department',    id:'Department',      isActive: pathname === '/Client/Department'},
+     { title: translate('navigation.ethics'),          icon: Gavel ,            url: '/Client/Ethics',    id:'ethics',              isActive: pathname === '/Client/Ethics'},
      { title: translate('navigation.gallery'),         icon: Image,             url: '/Client/Gallery',       id:'gallery',         isActive: pathname === '/Client/Gallery' },
      { title: translate('navigation.events'),          icon: Calendar,          url: '/Client/Events',        id:'events',          isActive: pathname === '/Client/Events' },
      { title: translate('navigation.about'),           icon: Library,           url: '/Client/About',         id:'about',           isActive: pathname === '/Client/About' },
@@ -78,8 +82,6 @@ export default function NavigationLogic() {
      { title: translate('navigation.cbtResults'),      icon: Scroll,            url: '/client/cbt-results',id:'/cbt-results',   isActive: pathname === '/client/cbt-results' },
      { title: translate('navigation.applicationForm'), icon: FileText,         url: '/client/application',id:'application',   isActive: pathname === '/client/application' },
      { title: translate('navigation.learn'), icon: School,         url: '/client/learn', id:'learn',   isActive: pathname === '/client/learn' },
-     { title: translate('navigation.support'),         icon: Headset,           url: '/Client/Support',       id:'support-auth',         isActive: pathname === '/Client/Support' },
-
    ], [pathname, translate, currentLanguage])
  
    const dropdownItems = useMemo(() => [

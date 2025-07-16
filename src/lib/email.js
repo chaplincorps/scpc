@@ -1,8 +1,8 @@
 import { render } from '@react-email/render';
 import { RegistrationEmail } from '@emails/RegistrationEmail';
-import { VerificationSuccessEmail } from '@emails/VerificationSuccessEmail';
+import { WelcomeEmail } from '@/emails/VerificationEmail';
 import { ResendTokenEmail } from '@emails/ResendTokenEmail';
-import {VerificationEmail} from '@emails/VerificationEmail';
+import {VerificationEmail} from '@/emails/VerificationEmail';
 import {PasswordResetEmail} from '@/emails/PasswordResetEmail';
 import { getMTATransporter } from '@lib/mailer';
 
@@ -33,9 +33,9 @@ export async function sendRegistrationEmail({ to, verificationToken }) {
   }
 }
 
-export async function sendVerificationSuccessEmail({ to, applicationId }) {
+export async function sendWelcomeEmail({ to, applicationId }) {
   const emailHtml = await render(
-    <VerificationSuccessEmail
+    <WelcomeEmail
       applicationId={applicationId}
     />
   ).then(html => html);
@@ -46,7 +46,7 @@ export async function sendVerificationSuccessEmail({ to, applicationId }) {
     const mailOptions = {
       from: process.env.SMTP_USER,
       to,
-      subject: 'Your SCPC Account is Now Verified!',
+      subject: 'Welcome to SCPC!',
       html: emailHtml,
     };
     

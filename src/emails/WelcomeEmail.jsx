@@ -12,7 +12,7 @@ import {
 } from '@react-email/components';
 import * as React from 'react';
 
-export const VerificationSuccessEmail = ({
+export const WelcomeEmail = ({
   applicationId,
 }) => {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
@@ -20,7 +20,7 @@ export const VerificationSuccessEmail = ({
   return (
     <Html>
       <Head />
-      <Preview>Your SCPC Account is Now Verified!</Preview>
+      <Preview>Welcome to SCPC!</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -30,11 +30,11 @@ export const VerificationSuccessEmail = ({
             alt="SCPC Logo"
             style={logo}
           />
-          <Heading style={h1}>Email Verification Successful!</Heading>
+          <Heading style={h1}>Welcome to SCPC</Heading>
           
           <Section style={section}>
             <Text style={text}>
-              Congratulations! Your email has been successfully verified. Your account is now active and ready to use.
+              Welcome to SCPC, Your account is now active and ready for application.
             </Text>
             
             <Section style={applicationIdSection}>
@@ -46,7 +46,7 @@ export const VerificationSuccessEmail = ({
             </Section>
 
             <Text style={text}>
-              You can now log in to your account and start using all the features of SCPC.
+              You can now log in to your account and start your application.
             </Text>
           </Section>
 
@@ -172,4 +172,4 @@ const link = {
   textDecoration: 'underline',
 };
 
-export default VerificationSuccessEmail; 
+export default WelcomeEmail; 

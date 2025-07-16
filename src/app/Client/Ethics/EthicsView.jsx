@@ -339,7 +339,7 @@ export default function EthicsView(){
                     ))}
                   </div>
                 </div>
-                <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-[#006699]">
+                <div className="bg-gray-50 p-4 rounded-lg border-l-4 border-[#0f69f138]">
                   <h4 className="mb-2 font-semibold text-black">American Military Code of Ethics (Excerpt):</h4>
                   <p className="italic leading-relaxed text-gray-700">
                     "I will make no oral or written statements disloyal to my country and its allies or harmful to their
